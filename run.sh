@@ -3,8 +3,10 @@
 # source code
 pushd /app
 
-npm install
+npm ci
 npm run build
+
+service nginx start
 
 while true; do
     sleep 60
