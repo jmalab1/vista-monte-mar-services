@@ -1,0 +1,42 @@
+services:
+  traefik:
+    image: traefik:v2.10.7
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    command:
+      - "--api.insecure=true" # Enable the dashboard
+      - "--providers.docker=true" # Enable Docker provider
+      - "--entrypoints.web.address=:80" # Listen on port 80
+      - "--entrypoints.websecure.address=:443" # Listen on port 443
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true" # Use TLS challenge
+      - "--certificatesresolvers.myresolver.acme.email=${DOMAIN}" # Your email for ACME
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json" # Path to ACME storage
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./certs/mycert.crt:/certs/mycert.crt" # Mount your self-signed certificate
+      - "./certs/mykey.key:/certs/mykey.key" # Mount your private key
+      - "traefik-certificates:/letsencrypt"
+    networks:
+      - main
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`localhost`)" # Replace with your domain
+      - "traefik.http.routers.app.entrypoints=websecure" # Use the secure entrypoint
+      - "traefik.http.routers.app.tls.certresolver=myresolver" # Specify the ACME resolver
+      - "traefik.http.services.app.loadbalancer.server.port=80" # Port for the service
+    networks:
+      - main
+
+networks:
+  main:
+    driver: bridge
+
+volumes:
+  traefik-certificates:

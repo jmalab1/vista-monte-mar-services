@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# source code
+echo creating build package
 pushd /app
 
-npm ci
+npm install
 npm run build
 
 service nginx start

@@ -7,17 +7,14 @@ RUN apt -y update \
         build-essential \
         curl \
         nodejs \
-        npm
+        npm \
+        iproute2
 
 COPY app /app
 
 RUN rm -rf /etc/nginx/conf.d/*
 COPY conf /etc/nginx/conf.d
 
-COPY certs/certificate.pem /etc/ssl/certs/certificate.pem
-COPY certs/privatekey.pem /etc/ssl/private/privatekey.pem
+RUN chmod +x /app/run.sh
 
-COPY run.sh /
-RUN chmod +x /run.sh
-
-ENTRYPOINT [ "/run.sh" ]
+ENTRYPOINT [ "/app/run.sh" ]

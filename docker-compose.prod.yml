@@ -1,0 +1,29 @@
+services:
+  traefik:
+    image: traefik:v2.4
+    ports:
+      - "80:80"
+      - "443:443"
+    command:
+      - "--configFile=/traefik.prod.yml" 
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./acme.json:/acme.json" # Storage for certificates
+    networks:
+      - main
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`casajadecr.com`)" # Replace with your domain
+      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.tls.certresolver=myresolver"
+    networks:
+      - main
+
+networks:
+  main:
+    driver: bridge
