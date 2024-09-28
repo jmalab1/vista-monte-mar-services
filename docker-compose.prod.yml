@@ -5,10 +5,15 @@ services:
       - "80:80"
       - "443:443"
     command:
-      - "--configFile=/traefik.prod.yml" 
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true" # Use TLS challenge
+      - "--certificatesresolvers.myresolver.acme.email=${EMAIL}" # Your email for ACME
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json" # Path to ACME storage
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "./acme.json:/acme.json" # Storage for certificates
+      - "traefik-certificates:/letsencrypt"
     networks:
       - main
 
@@ -18,12 +23,17 @@ services:
       dockerfile: Dockerfile
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`casajadecr.com`)" # Replace with your domain
+      - "traefik.http.routers.app.rule=Host(`casajadecr.com`)"
       - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.tls=true"
       - "traefik.http.routers.app.tls.certresolver=myresolver"
+      - "traefik.http.services.app.loadbalancer.server.port=80" # Port for the service
     networks:
       - main
 
 networks:
   main:
     driver: bridge
+
+volumes:
+  traefik-certificates:

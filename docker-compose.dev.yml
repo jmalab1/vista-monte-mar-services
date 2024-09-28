@@ -11,7 +11,7 @@ services:
       - "--entrypoints.web.address=:80" # Listen on port 80
       - "--entrypoints.websecure.address=:443" # Listen on port 443
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true" # Use TLS challenge
-      - "--certificatesresolvers.myresolver.acme.email=${DOMAIN}" # Your email for ACME
+      - "--certificatesresolvers.myresolver.acme.email=${EMAIL}" # Your email for ACME
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json" # Path to ACME storage
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"

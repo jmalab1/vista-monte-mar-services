@@ -4,6 +4,8 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 docker compose -f docker-compose.dev.yml up --build --force-recreate -d
 
+docker compose -f docker-compose.prod.yml up --build --force-recreate -d
+
 openssl genrsa -out mykey.key 2048 \
 && openssl req -new -key mykey.key -out myrequest.csr \
 && openssl x509 -req -days 365 -in myrequest.csr -signkey mykey.key -out mycert.crt
