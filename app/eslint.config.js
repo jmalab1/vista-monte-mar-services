@@ -7,6 +7,15 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 export default [
   { ignores: ['dist'] },
   {
+    parser: "@typescript-eslint/parser",
+    extends: [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "react-app"
+    ],
+    plugins: ["@typescript-eslint"]
+  },
+  {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
