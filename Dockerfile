@@ -10,6 +10,8 @@ RUN apt -y update \
         npm
 
 COPY app /app
+
+RUN rm -rf /etc/nginx/conf.d/*
 COPY conf /etc/nginx/conf.d
 
 COPY certs/certificate.pem /etc/ssl/certs/certificate.pem
