@@ -5,7 +5,7 @@ type TButton = {
   classValue: string;
 };
 
-const Button: FunctionComponent<TButton> = ({ title, classValue }) => {
+const ButtonItem: FunctionComponent<TButton> = ({ title, classValue }) => {
   return (
     <button
       type="button"
@@ -16,4 +16,4 @@ const Button: FunctionComponent<TButton> = ({ title, classValue }) => {
   );
 };
 
-export default Button;
+export default ButtonItem;

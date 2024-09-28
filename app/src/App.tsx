@@ -1,12 +1,13 @@
-import { useState } from 'react';
 import './App.css';
+import Category from './components/Categories/Category';
 import ContactForm from './components/forms/ContactForm';
+import Navbar from './components/Navbar';
 
 const App = () => {
-  const [count, setCount] = useState(0);
-
   return (
     <>
+      <Navbar />
+      <Category />
       <ContactForm />
     </>
   );

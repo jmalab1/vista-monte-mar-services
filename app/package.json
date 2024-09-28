@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "@heroicons/react": "2.0.18",
+    "@material-tailwind/react": "2.1.2",
+    "next": "13.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

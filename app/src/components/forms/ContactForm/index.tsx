@@ -2,7 +2,7 @@ import Input from '../../form-items/Input';
 import TextArea from '../../form-items/TextArea';
 import Upload from '../../form-items/Upload';
 import SectionHeader from '../../heading/SectionHeader';
-import Button from '../../form-items/Button';
+import ButtonItem from '../../form-items/ButtonItem';
 
 const ContactForm = () => {
   return (
@@ -23,11 +23,11 @@ const ContactForm = () => {
         </div>
       </div>
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <Button
+        <ButtonItem
           title="cancel"
           classValue="border border-blue-500 text-blue-500 font-bold py-2 px-4 rounded"
         />
-        <Button
+        <ButtonItem
           title="submit"
           classValue="bg-gradient-to-r from-blue-400 to-indigo-500 text-white font-bold py-2 px-4 rounded"
         />
