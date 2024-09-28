@@ -4,6 +4,7 @@ import Input from '../../form-items/Input';
 import TextArea from '../../form-items/TextArea';
 import Upload from '../../form-items/Upload';
 import SectionHeader from '../../heading/SectionHeader';
+import Button from '../../form-items/Button';
 
 const ContactForm = () => {
   return (
@@ -12,30 +13,20 @@ const ContactForm = () => {
         <div className="border-b border-gray-900/10 pb-12">
           <SectionHeader />
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <Input />
-            <Input />
+            <Input title="First Name" id="firstname" />
+            <Input title="Last Name" id="lastname" />
             <TextArea
               title="Comment"
               id="comment"
               placeholder="Let us know what you think"
             />
-            <Upload />
+            <Upload title="Attachments" />
           </div>
         </div>
       </div>
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button
-          type="button"
-          className="text-sm font-semibold leading-6 text-gray-900"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Save
-        </button>
+        <Button title="cancel" color="" />
+        <Button title="submit" color="bg-indigo-600" />
       </div>
     </form>
   );
