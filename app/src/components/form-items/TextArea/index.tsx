@@ -1,5 +1,4 @@
-import React, { FunctionComponent } from 'react';
-import { useState } from 'react';
+import { FunctionComponent } from 'react';
 
 type TTextArea = {
   title: string;
