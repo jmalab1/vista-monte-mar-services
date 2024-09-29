@@ -3,6 +3,8 @@
 echo creating build package
 pushd /app
 
+rm -rf /dist /node_modules
+
 npm install
 npm run build
 
