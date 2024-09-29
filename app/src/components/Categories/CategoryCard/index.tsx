@@ -12,14 +12,12 @@ interface CategoryCardProps {
 const CategoryCard = ({ img, title, desc, icon: Icon }: CategoryCardProps) => {
   return (
     <Card
-      className="relative grid min-h-[12rem] w-full overflow-hidden"
+      className="relative grid min-h-[12rem] w-full overflow-hidden hover:cursor-pointer transition-transform duration-300 transform hover:scale-105"
       placeholder={undefined}
       onPointerEnterCapture={undefined}
       onPointerLeaveCapture={undefined}
     >
       <img
-        width={768}
-        height={768}
         src={img}
         alt={title}
         className="absolute inset-0 h-full w-full object-cover object-center"

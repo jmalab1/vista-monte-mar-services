@@ -1,22 +1,8 @@
 import React from 'react';
-import {
-  Navbar as MTNavbar,
-  IconButton,
-  Typography,
-} from '@material-tailwind/react';
-import {
-  RectangleStackIcon,
-  XMarkIcon,
-  Bars3Icon,
-  PhotoIcon,
-  EnvelopeIcon,
-} from '@heroicons/react/24/solid';
+import { Navbar as MTNavbar, Typography } from '@material-tailwind/react';
+import { PhotoIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
 
 const NAV_MENU = [
-  {
-    name: 'Page',
-    icon: RectangleStackIcon,
-  },
   {
     name: 'Jaco Beach',
     icon: PhotoIcon,
@@ -85,7 +71,7 @@ export const Navbar = () => {
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
           >
-            Material Tailwind
+            Vista Monte Mar
           </Typography>
         </div>
         <div className="w-1/2 justify-items-end">

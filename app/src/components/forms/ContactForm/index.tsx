@@ -6,7 +6,7 @@ import ButtonItem from '../../form-items/ButtonItem';
 
 const ContactForm = () => {
   return (
-    <form className="mx-12" id="contact">
+    <form className="mx-96 mb-12" id="contact">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <SectionHeader
