@@ -6,10 +6,10 @@ import {
 } from '@material-tailwind/react';
 import {
   RectangleStackIcon,
-  UserCircleIcon,
-  CommandLineIcon,
   XMarkIcon,
   Bars3Icon,
+  PhotoIcon,
+  EnvelopeIcon,
 } from '@heroicons/react/24/solid';
 
 const NAV_MENU = [
@@ -18,13 +18,14 @@ const NAV_MENU = [
     icon: RectangleStackIcon,
   },
   {
-    name: 'Account',
-    icon: UserCircleIcon,
+    name: 'Jaco Beach',
+    icon: PhotoIcon,
+    href: '#jaco_beach',
   },
   {
-    name: 'Docs',
-    icon: CommandLineIcon,
-    href: 'https://www.material-tailwind.com/docs/react/installation',
+    name: 'Contact Us',
+    icon: EnvelopeIcon,
+    href: '#contact',
   },
 ];
 
@@ -39,7 +40,6 @@ function NavItem({ children, href }: NavItemProps) {
       <Typography
         as="a"
         href={href || '#'}
-        target={href ? '_blank' : '_self'}
         variant="paragraph"
         color="gray"
         className="flex items-center gap-2 font-medium text-gray-900"
@@ -71,45 +71,33 @@ export const Navbar = () => {
     <MTNavbar
       shadow={false}
       fullWidth
-      className="border-0 sticky top-0 z-50"
+      className="border-0 sticky top-0 z-50 justify-right"
       placeholder={undefined}
       onPointerEnterCapture={undefined}
       onPointerLeaveCapture={undefined}
     >
-      <div className="container mx-auto flex items-center justify-between">
-        <Typography
-          color="blue-gray"
-          className="text-lg font-bold text-black"
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          Material Tailwind
-        </Typography>
-        <ul className="hidden items-center gap-8 lg:flex">
-          {NAV_MENU.map(({ name, icon: Icon, href }) => (
-            <NavItem key={name} href={href}>
-              <Icon className="h-5 w-5" />
-              {name}
-            </NavItem>
-          ))}
-        </ul>
-        <div className="hidden items-center gap-2 lg:flex"></div>
-        <IconButton
-          variant="text"
-          color="gray"
-          onClick={handleOpen}
-          className="ml-auto inline-block lg:hidden"
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          {open ? (
-            <XMarkIcon strokeWidth={2} className="h-6 w-6" />
-          ) : (
-            <Bars3Icon strokeWidth={2} className="h-6 w-6" />
-          )}
-        </IconButton>
+      <div className="mx-8 flex">
+        <div className="w-1/2 justify-items-start">
+          <Typography
+            color="blue-gray"
+            className="text-lg font-bold text-black"
+            placeholder={undefined}
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+          >
+            Material Tailwind
+          </Typography>
+        </div>
+        <div className="w-1/2 justify-items-end">
+          <ul className="gap-8 lg:flex">
+            {NAV_MENU.map(({ name, icon: Icon, href }) => (
+              <NavItem key={name} href={href}>
+                <Icon className="h-5 w-5" />
+                {name}
+              </NavItem>
+            ))}
+          </ul>
+        </div>
       </div>
     </MTNavbar>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import { Card, CardBody, Typography } from '@material-tailwind/react';
 
@@ -18,7 +17,7 @@ const CategoryCard = ({ img, title, desc, icon: Icon }: CategoryCardProps) => {
       onPointerEnterCapture={undefined}
       onPointerLeaveCapture={undefined}
     >
-      <Image
+      <img
         width={768}
         height={768}
         src={img}

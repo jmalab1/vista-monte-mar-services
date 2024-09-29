@@ -1,3 +1,4 @@
+import { Typography } from '@material-tailwind/react';
 import { FunctionComponent } from 'react';
 
 type TSectionHeader = {
@@ -11,11 +12,27 @@ const SectionHeader: FunctionComponent<TSectionHeader> = ({
 }) => {
   return (
     <>
-      <div className="border-b border-gray-900/10 pb-12"></div>
-      <h1 className="text-base font-semibold leading-7 text-gray-900">
-        {title}
-      </h1>
-      <p className="mt-1 text-sm leading-6 text-gray-600">{subsection}</p>
+      <div className="place-items-center text-center">
+        <Typography
+          variant="h2"
+          color="blue-gray"
+          className="my-3"
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          {title}
+        </Typography>
+        <Typography
+          variant="lead"
+          className="!text-gray-500 lg:w-6/12"
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          {subsection}
+        </Typography>
+      </div>
     </>
   );
 };

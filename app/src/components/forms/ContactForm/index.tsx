@@ -6,10 +6,13 @@ import ButtonItem from '../../form-items/ButtonItem';
 
 const ContactForm = () => {
   return (
-    <form>
+    <form className="mx-12" id="contact">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
-          <SectionHeader title="Contact Us" />
+          <SectionHeader
+            title="Contact Us"
+            subsection="Tell us about your trip and your stay with us. We'd love to hear from you."
+          />
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <Input title="First Name" id="firstname" />
             <Input title="Last Name" id="lastname" />

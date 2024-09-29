@@ -2,64 +2,49 @@
 
 import { Card, CardBody, Typography, Button } from '@material-tailwind/react';
 import {
-  GlobeEuropeAfricaIcon,
-  MicrophoneIcon,
-  PuzzlePieceIcon,
-  HeartIcon,
+  PencilSquareIcon,
+  ChatBubbleOvalLeftEllipsisIcon,
+  ChartPieIcon,
+  LightBulbIcon,
 } from '@heroicons/react/24/solid';
 import CategoryCard from '../CategoryCard';
+import SectionHeader from '../../heading/SectionHeader';
 
 const CATEGORIES = [
   {
     img: '/image/blogs/blog-3.png',
-    icon: HeartIcon,
-    title: 'Fiction Books',
-    desc: 'up to 40% OFF',
+    icon: ChartPieIcon,
+    title: 'Restaurants',
+    desc: 'Looking for a bite to eat?',
   },
   {
     img: '/image/blogs/blog-12.jpeg',
-    icon: PuzzlePieceIcon,
-    title: 'School Books',
-    desc: 'up to 40% OFF',
+    icon: LightBulbIcon,
+    title: 'Things To Do',
+    desc: 'Explore Jaco',
   },
   {
     img: '/image/blogs/blog-10.jpeg',
-    icon: GlobeEuropeAfricaIcon,
-    title: 'Non-fiction Books',
-    desc: 'up to 40% OFF',
+    icon: ChatBubbleOvalLeftEllipsisIcon,
+    title: 'Emergency',
+    desc: 'Need urgent help?',
   },
   {
     img: '/image/blogs/blog-13.png',
-    icon: MicrophoneIcon,
-    title: 'SF & Fantasy Books',
-    desc: 'up to 40% OFF',
+    icon: PencilSquareIcon,
+    title: 'Noteworthy Places',
+    desc: 'Looking for more?',
   },
 ];
 
 export const Category = () => {
   return (
-    <section className="container mx-auto px-8 pb-20 pt-20 lg:pt-0">
-      <div className="mb-20 grid place-items-center text-center">
-        <Typography
-          variant="h2"
-          color="blue-gray"
-          className="my-3"
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          Top Book Categories
-        </Typography>
-        <Typography
-          variant="lead"
-          className="!text-gray-500 lg:w-6/12"
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          Explore our diverse range of categories and embark on a reading
-          journey that suits your mood, passion, or curiosity.
-        </Typography>
+    <section className="mx-auto px-8 pb-20 pt-20 lg:pt-0" id="jaco_beach">
+      <div className="mb-10 grid place-items-center text-center">
+        <SectionHeader
+          title="Jaco Beach"
+          subsection="Jaco is a vibrant coastal destination in Costa Rica, known for its stunning beaches, lively nightlife, and rich biodiversity, below are some ideas to get you pumped."
+        />
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card
