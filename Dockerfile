@@ -10,11 +10,13 @@ RUN apt -y update \
         npm \
         iproute2
 
-COPY app /app
+COPY app/dist /app/dist
+COPY app/public /app/public
 
 RUN rm -rf /etc/nginx/conf.d/*
 COPY conf /etc/nginx/conf.d
 
+COPY app/run.sh /app/run.sh
 RUN chmod +x /app/run.sh
 
 ENTRYPOINT [ "/app/run.sh" ]
