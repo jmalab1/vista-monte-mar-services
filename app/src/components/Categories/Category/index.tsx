@@ -1,5 +1,3 @@
-'use client';
-
 import { Card, CardBody, Typography, Button } from '@material-tailwind/react';
 import {
   PencilSquareIcon,
