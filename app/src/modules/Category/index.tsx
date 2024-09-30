@@ -59,7 +59,7 @@ export const Category = () => {
           subsection="Jaco is a vibrant coastal destination in Costa Rica, known for its stunning beaches, lively nightlife, and rich biodiversity, below are some ideas to get you pumped."
         />
       </div>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 mx-12">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card
           color="gray"
           className="relative grid h-full w-full place-items-center overflow-hidden text-center"

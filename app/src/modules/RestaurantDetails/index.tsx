@@ -1,5 +1,4 @@
-import MapboxMap from '../../components/MapboxMap';
-import SmallTable from '../../components/SmallTable';
+import MapAndTable from '../MapAndTable';
 
 const Restaurants = [
   {
@@ -42,17 +41,25 @@ const Restaurants = [
     type: 'Japanese',
     distance: '5 miles',
   },
+  {
+    name: 'Takumi 8',
+    type: 'Japanese',
+    distance: '5 miles',
+  },
+  {
+    name: 'Takumi 9',
+    type: 'Japanese',
+    distance: '5 miles',
+  },
+  {
+    name: 'Takumi 10',
+    type: 'Japanese',
+    distance: '5 miles',
+  },
 ];
 
 export const RestaurantDetails = () => {
-  return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 mt-10 mx-12">
-      <SmallTable records={Restaurants} title="Restaurants" />
-      <div className="col-span-2">
-        <MapboxMap latLon={[9.6056, -84.6164]} />
-      </div>
-    </div>
-  );
+  return <MapAndTable records={Restaurants} title="Restaurants" />;
 };
 
 export default RestaurantDetails;

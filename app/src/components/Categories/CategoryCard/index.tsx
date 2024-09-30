@@ -32,7 +32,7 @@ const CategoryCard = ({
         alt={title}
         className="absolute inset-0 h-full w-full object-cover object-center"
       />
-      <div className="absolute inset-0 h-full w-full bg-black/70" />
+      <div className="absolute inset-0 h-full w-full bg-black/50" />
       <CardBody
         className="relative flex flex-col justify-between"
         placeholder={undefined}

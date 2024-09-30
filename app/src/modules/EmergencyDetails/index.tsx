@@ -1,5 +1,4 @@
-import MapboxMap from '../../components/MapboxMap';
-import SmallTable from '../../components/SmallTable';
+import MapAndTable from '../MapAndTable';
 
 const Emergency = [
   {
@@ -20,14 +19,7 @@ const Emergency = [
 ];
 
 export const EmergencyDetails = () => {
-  return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 mt-10 mx-12">
-      <SmallTable records={Emergency} title="Emergency" />
-      <div className="col-span-2">
-        <MapboxMap latLon={[9.6056, -84.6164]} />
-      </div>
-    </div>
-  );
+  return <MapAndTable records={Emergency} title="Emergency" />;
 };
 
 export default EmergencyDetails;
