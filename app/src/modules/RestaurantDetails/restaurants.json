@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Graffiti Restro Cafe and Wine Bar",
+    "type": "Fusion",
+    "location": { "lat": 9.6147, "lon": -84.6266 },
+    "description": "A chic, upscale restaurant offering a blend of locally sourced dishes with Cajun flair.",
+    "distance": "2.5 km"
+  },
+  {
+    "name": "Lemon Zest",
+    "type": "International Cuisine",
+    "location": { "lat": 9.617, "lon": -84.6287 },
+    "description": "Fine dining with a focus on international dishes, including New York strip steak and seafood.",
+    "distance": "2.3 km"
+  },
+  {
+    "name": "El Hicaco Seafood",
+    "type": "Costa Rican/Seafood",
+    "location": { "lat": 9.6215, "lon": -84.6289 },
+    "description": "Stunning beachfront dining, known for fresh seafood like shrimp & rice or octopus burrata.",
+    "distance": "2.0 km"
+  },
+  {
+    "name": "Tacobar Jaco",
+    "type": "Tacos",
+    "location": { "lat": 9.6191, "lon": -84.6272 },
+    "description": "A casual spot offering a variety of tacos with fresh ingredients.",
+    "distance": "2.1 km"
+  },
+  {
+    "name": "Koko Gastro Pub",
+    "type": "Beachfront Gastro Bar",
+    "location": { "lat": 9.6148, "lon": -84.6281 },
+    "description": "Relaxed beachfront pub with ocean views, serving seafood and varied cuisine.",
+    "distance": "2.7 km"
+  },
+  {
+    "name": "Puddlefish Brewery",
+    "type": "Brewery/Pub",
+    "location": { "lat": 9.6145, "lon": -84.6269 },
+    "description": "A local craft brewery offering gourmet pub food like wraps, burgers, and nachos.",
+    "distance": "2.6 km"
+  },
+  {
+    "name": "Soda Rustica",
+    "type": "Costa Rican",
+    "location": { "lat": 9.6211, "lon": -84.6275 },
+    "description": "A traditional Costa Rican soda offering casado lunches with local flavor.",
+    "distance": "1.9 km"
+  },
+  {
+    "name": "Sabress Kosher Restaurant",
+    "type": "Mediterranean/Israeli",
+    "location": { "lat": 9.6198, "lon": -84.6278 },
+    "description": "Kosher Mediterranean food, including falafels, hummus, and shakshuka in a family-friendly setting.",
+    "distance": "2.1 km"
+  },
+  {
+    "name": "Zona K Bistro",
+    "type": "Fusion",
+    "location": { "lat": 9.6145, "lon": -84.628 },
+    "description": "Latin, Asian, and Continental fusion dishes in a small gourmet restaurant.",
+    "distance": "2.7 km"
+  }
+]
