@@ -1,25 +1,29 @@
-import { useEffect, useRef } from 'react';
-import mapboxgl from 'mapbox-gl';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
+import 'leaflet-providers';
+import { FunctionComponent } from 'react';
+//import L from 'leaflet';
 
-mapboxgl.accessToken =
-  'pk.eyJ1Ijoiam1hbGFiMjQiLCJhIjoiY20xbjE4aWg4MG95ZDJscHV1ZDE2bWgzbCJ9.A5_cN8-wk6oLWk0Cz0VrXA'; // Replace with your token
+type TMapboxMap = {
+  latLon?: [number, number];
+};
 
-const MapboxMap = () => {
-  const mapContainerRef = useRef(null);
-
-  useEffect(() => {
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current ?? '',
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-84.629, 9.6141],
-      zoom: 12,
-    });
-
-    return () => map.remove();
-  }, []);
-
+const MapboxMap: FunctionComponent<TMapboxMap> = ({ latLon }) => {
   return (
-    <div ref={mapContainerRef} style={{ height: '24rem', width: '100%' }} />
+    <MapContainer
+      center={latLon}
+      zoom={14}
+      style={{ height: '24rem', width: '100%' }}
+    >
+      <TileLayer
+        url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+      <Marker position={latLon}>
+        <Popup>A pretty popup for your marker.</Popup>
+      </Marker>
+    </MapContainer>
   );
 };
 

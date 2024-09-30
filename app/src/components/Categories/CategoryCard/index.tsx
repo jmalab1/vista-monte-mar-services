@@ -3,19 +3,29 @@ import React from 'react';
 import { Card, CardBody, Typography } from '@material-tailwind/react';
 
 interface CategoryCardProps {
+  id: string;
   img: string;
   title: string;
   desc: string;
   icon: React.ElementType;
+  callback: (id: string) => void;
 }
 
-const CategoryCard = ({ img, title, desc, icon: Icon }: CategoryCardProps) => {
+const CategoryCard = ({
+  id,
+  img,
+  title,
+  desc,
+  icon: Icon,
+  callback,
+}: CategoryCardProps) => {
   return (
     <Card
       className="relative grid min-h-[12rem] w-full overflow-hidden hover:cursor-pointer transition-transform duration-300 transform hover:scale-105"
       placeholder={undefined}
       onPointerEnterCapture={undefined}
       onPointerLeaveCapture={undefined}
+      onClick={() => callback(id)}
     >
       <img
         src={img}

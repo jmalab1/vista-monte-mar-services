@@ -1,6 +1,6 @@
-import Category from './components/Categories/Category';
-import ContactForm from './components/forms/ContactForm';
-import Navbar from './components/Navbar';
+import Category from './modules/Category';
+import ContactForm from './modules/ContactForm';
+import Navbar from './modules/Navbar';
 
 const App = () => {
   return (

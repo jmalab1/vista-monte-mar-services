@@ -1,8 +1,8 @@
-import Input from '../../form-items/Input';
-import TextArea from '../../form-items/TextArea';
-import Upload from '../../form-items/Upload';
-import SectionHeader from '../../heading/SectionHeader';
-import ButtonItem from '../../form-items/ButtonItem';
+import ButtonItem from '../../components/form-items/ButtonItem';
+import Input from '../../components/form-items/Input';
+import TextArea from '../../components/form-items/TextArea';
+import Upload from '../../components/form-items/Upload';
+import SectionHeader from '../../components/heading/SectionHeader';
 
 const ContactForm = () => {
   return (
