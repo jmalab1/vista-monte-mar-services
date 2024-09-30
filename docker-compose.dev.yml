@@ -22,9 +22,7 @@ services:
       - main
 
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: jmalab24/costa-rica-condo-app:latest
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(`localhost`)" # Replace with your domain
