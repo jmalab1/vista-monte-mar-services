@@ -12,7 +12,7 @@ export const MapAndTable: FunctionComponent<TMapAndTable> = ({
   title,
 }) => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 lg:gap-6 mt-10">
+    <div className="md:grid md:grid-cols-1 md:grid-cols-3 md:gap-6 mt-10">
       <SmallTable records={records} title={title} />
       <div className="col-span-2">
         <MapboxMap latLon={[9.6056, -84.6164]} />
