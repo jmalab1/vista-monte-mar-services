@@ -18,7 +18,7 @@ const MapboxMap: FunctionComponent<TMapboxMap> = ({ latLon }) => {
         style={{ height: '24rem', width: '100%' }}
       >
         <TileLayer
-          url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <Marker position={latLon}>
