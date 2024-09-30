@@ -12,14 +12,16 @@ import ThingsToDoDetails from '../ThingsToDoDetails';
 import NoteworthyDetails from '../NoteworthyDetails';
 import SectionHeader from '../../components/heading/SectionHeader';
 import CategoryCard from '../../components/Categories/CategoryCard';
+import _ from 'lodash';
 
-const CATEGORIES = [
+let categories = [
   {
     id: 'restaurants',
     img: '/image/blogs/blog-3.png',
     icon: ChartPieIcon,
     title: 'Restaurants',
     desc: 'Looking for a bite to eat?',
+    active: true,
   },
   {
     id: 'things_to_do',
@@ -27,6 +29,7 @@ const CATEGORIES = [
     icon: LightBulbIcon,
     title: 'Things To Do',
     desc: 'Explore Jaco',
+    active: false,
   },
   {
     id: 'emergency',
@@ -34,6 +37,7 @@ const CATEGORIES = [
     icon: ChatBubbleOvalLeftEllipsisIcon,
     title: 'Emergency',
     desc: 'Need urgent help?',
+    active: false,
   },
   {
     id: 'noteworthy',
@@ -41,6 +45,7 @@ const CATEGORIES = [
     icon: PencilSquareIcon,
     title: 'Noteworthy',
     desc: 'Looking for more?',
+    active: false,
   },
 ];
 
@@ -48,6 +53,13 @@ export const Category = () => {
   const [hiddenDivState, setHiddenDivState] = useState('restaurants');
 
   const cardClickCallbackHandler = (id: string) => {
+    _.each(categories, (category) => {
+      category.active = false;
+
+      if (id == category.id) {
+        category.active = true;
+      }
+    });
     setHiddenDivState(id);
   };
 
@@ -107,7 +119,7 @@ export const Category = () => {
           </CardBody>
         </Card>
         <div className="col-span-1 flex flex-col gap-6">
-          {CATEGORIES.slice(0, 2).map((props, key) => (
+          {categories.slice(0, 2).map((props, key) => (
             <CategoryCard
               key={key}
               {...props}
@@ -116,7 +128,7 @@ export const Category = () => {
           ))}
         </div>
         <div className="col-span-1 flex flex-col gap-6">
-          {CATEGORIES.slice(2, 4).map((props, key) => (
+          {categories.slice(2, 4).map((props, key) => (
             <CategoryCard
               key={key}
               {...props}

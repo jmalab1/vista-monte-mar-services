@@ -9,6 +9,7 @@ interface CategoryCardProps {
   desc: string;
   icon: React.ElementType;
   callback: (id: string) => void;
+  active: boolean;
 }
 
 const CategoryCard = ({
@@ -17,11 +18,12 @@ const CategoryCard = ({
   title,
   desc,
   icon: Icon,
+  active,
   callback,
 }: CategoryCardProps) => {
   return (
     <Card
-      className="relative grid min-h-[12rem] w-full overflow-hidden hover:cursor-pointer transition-transform duration-300 transform hover:scale-105"
+      className={`relative grid min-h-[12rem] w-full overflow-hidden ${active ? 'grayscale' : 'hover:cursor-pointer transition-transform duration-300 transform hover:scale-105'}`}
       placeholder={undefined}
       onPointerEnterCapture={undefined}
       onPointerLeaveCapture={undefined}
