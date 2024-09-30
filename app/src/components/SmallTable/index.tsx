@@ -16,7 +16,7 @@ export const SmallTable: FunctionComponent<TSmallTable> = ({
   title,
 }) => {
   return (
-    <div className="w-full max-w-2xl max-h-96 mb-5 mx-auto bg-white shadow-lg rounded-lg border border-gray-200">
+    <div className="w-full max-h-96 mb-5 mx-auto bg-white shadow-lg rounded-lg border border-gray-200">
       <header className="px-5 py-4 border-b border-gray-100">
         <h2 className="font-semibold text-gray-800">{title}</h2>
       </header>

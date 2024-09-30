@@ -6,7 +6,7 @@ import SectionHeader from '../../components/heading/SectionHeader';
 
 const ContactForm = () => {
   return (
-    <form className="mb-12 md:mx-72" id="contact">
+    <form className="mb-12 lg:mx-72" id="contact">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <SectionHeader
