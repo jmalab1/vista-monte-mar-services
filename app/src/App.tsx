@@ -1,5 +1,6 @@
 import Category from './modules/Category';
 import ContactForm from './modules/ContactForm';
+import Footer from './modules/Footer';
 import Navbar from './modules/Navbar';
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
         <Category />
         <ContactForm />
       </div>
+      <Footer />
     </div>
   );
 };

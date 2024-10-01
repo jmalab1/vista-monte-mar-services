@@ -1,4 +1,4 @@
-import { Card, CardBody, Typography, Button } from '@material-tailwind/react';
+import { Card, CardBody, Button } from '@material-tailwind/react';
 import {
   PencilSquareIcon,
   ChatBubbleOvalLeftEllipsisIcon,
@@ -85,27 +85,12 @@ export const Category = () => {
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
           >
-            <Typography
-              variant="h4"
-              className="mt-9"
-              color="white"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              Book With Us
-            </Typography>
-            <Typography
-              color="white"
-              className="mt-4 mb-14 font-normal opacity-50"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
+            <p className="mt-9 text-white text-2xl">Book With Us</p>
+            <p className="mt-4 mb-14 font-normal text-white opacity-50">
               Enjoy our condo steps from the Pacific coast! Perfect for 4
               guests, it features modern amenities, a pool, and easy access to
               local adventures. Book now for your Costa Rica getaway!
-            </Typography>
+            </p>
             <Button
               size="sm"
               color="white"
