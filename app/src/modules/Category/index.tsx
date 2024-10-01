@@ -1,4 +1,4 @@
-import { Card, CardBody, Button } from '@material-tailwind/react';
+import { Card, CardBody } from '@material-tailwind/react';
 import {
   PencilSquareIcon,
   ChatBubbleOvalLeftEllipsisIcon,
@@ -13,6 +13,8 @@ import NoteworthyDetails from '../NoteworthyDetails';
 import SectionHeader from '../../components/heading/SectionHeader';
 import CategoryCard from '../../components/Categories/CategoryCard';
 import _ from 'lodash';
+import AbbLogo from '../Logos/AbbLogo';
+import VrboLogo from '../Logos/VrboLogo';
 
 let categories = [
   {
@@ -89,17 +91,12 @@ export const Category = () => {
             <p className="mt-4 mb-14 font-normal text-white opacity-50">
               Enjoy our condo steps from the Pacific coast! Perfect for 4
               guests, it features modern amenities, a pool, and easy access to
-              local adventures. Book now for your Costa Rica getaway!
+              local adventures. Book now for your Costa Rica getaway!s
             </p>
-            <Button
-              size="sm"
-              color="white"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              Read More
-            </Button>
+            <div className="flex gap-6 text-white place-self-center">
+              <AbbLogo size={40} />
+              <VrboLogo size={40} />
+            </div>
           </CardBody>
         </Card>
         <div className="col-span-1 flex flex-col gap-6">
