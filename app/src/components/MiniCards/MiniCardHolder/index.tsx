@@ -10,9 +10,9 @@ const MiniCardHolder: FunctionComponent<TMiniCardHolder> = ({
   children,
 }) => {
   return (
-    <div className="border-solid border-2 border-sky-500 bg-gray-50 p-1 pt-2 rounded-lg mb-5">
-      <h4 className="mb-4 text-xl font-bold pl-2">{title}</h4>
-      <div className="overflow-auto flex flex-col gap-1 max-h-96">
+    <div className="p-2 pt-4 rounded-lg mb-5 shadow-2xl bg-base-200">
+      <h4 className="mb-4 text-lg font-bold pl-2 text-nuetral">{title}</h4>
+      <div className="overflow-auto flex flex-col gap-2 max-h-96">
         {children}
       </div>
     </div>

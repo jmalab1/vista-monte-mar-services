@@ -9,11 +9,11 @@ const Upload: FunctionComponent<TUpload> = ({ title }) => {
     <div className="col-span-full">
       <label
         htmlFor="cover-photo"
-        className="block text-sm font-medium leading-6 text-gray-900 text-left"
+        className="block text-sm font-medium leading-6 text-nuetral text-left"
       >
         {title}
       </label>
-      <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+      <div className="mt-2 flex justify-center rounded-lg border border-dashed border-nuetral px-6 py-10">
         <div className="text-center">
           <svg
             className="mx-auto h-12 w-12 text-gray-300"

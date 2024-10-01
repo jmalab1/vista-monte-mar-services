@@ -12,8 +12,8 @@ const NAV_MENU = [
 ];
 
 export const Navbar = () => {
-  const light = 'emerald';
-  const dark = 'dim';
+  const light = 'olight';
+  const dark = 'odark';
 
   const getInitialTheme = () => {
     return localStorage.getItem('theme') ?? light;
@@ -33,7 +33,7 @@ export const Navbar = () => {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Vista Monte Mar</a>
+        <h1 className="text-xl font-bold ml-6">Vista Monte Mar</h1>
       </div>
       <div className="flex-none">
         <label className="flex cursor-pointer gap-2">

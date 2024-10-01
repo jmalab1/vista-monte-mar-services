@@ -64,7 +64,7 @@ export const Category = () => {
   };
 
   return (
-    <section className="px-8 pb-20 pt-20 lg:pt-0 bg-amber-50" id="jaco_beach">
+    <section className="px-8 pb-20 pt-20 lg:pt-0 bg-base-200" id="jaco_beach">
       <div className="mb-10 grid place-items-center text-center ">
         <SectionHeader
           title="Jaco Beach"
@@ -73,8 +73,7 @@ export const Category = () => {
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card
-          color="gray"
-          className="relative grid h-full w-full place-items-center overflow-hidden text-center"
+          className="relative grid h-full w-full place-items-center overflow-hidden text-center bg-nuetral"
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}

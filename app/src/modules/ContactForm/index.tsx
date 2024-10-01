@@ -28,8 +28,7 @@ const ContactForm = () => {
         </div>
       </div>
       <div className="mt-6 flex items-center justify-end gap-x-6 mr-4">
-        <ButtonItem title="cancel" classValue="btn-default" />
-        <ButtonItem title="submit" classValue="btn-primary" />
+        <ButtonItem title="submit" classValue="btn-secondary" />
       </div>
     </form>
   );
