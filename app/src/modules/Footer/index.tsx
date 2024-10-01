@@ -11,22 +11,13 @@ export const Footer = () => {
             height="24"
             viewBox="-1 0 20 20"
             version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
+            className="fill-current"
           >
-            <title>airbnb [#179]</title>
-            <desc>Created with Sketch.</desc>
-            <defs></defs>
-            <g
-              id="Page-1"
-              stroke="none"
-              stroke-width="1"
-              fill="none"
-              fill-rule="evenodd"
-            >
+            <g id="Page-1" stroke="none" stroke-width="1">
               <g
                 id="Dribbble-Light-Preview"
                 transform="translate(-261.000000, -7399.000000)"
-                fill="#000000"
+                fill="fill-current"
               >
                 <g id="icons" transform="translate(56.000000, 160.000000)">
                   <path
@@ -42,24 +33,18 @@ export const Footer = () => {
           <svg
             version="1.1"
             id="Layer_1"
-            xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 226.777 226.777"
-            enable-background="new 0 0 226.777 226.777"
+            className="fill-current"
           >
             <g>
-              <polygon
-                fill="#231F20"
-                points="167.272,2.863 113.888,114.772 59.315,2.863 0,2.863 113.49,223.915 226.984,2.863 	"
-              />
+              <polygon points="167.272,2.863 113.888,114.772 59.315,2.863 0,2.863 113.49,223.915 226.984,2.863 	" />
               <path
-                fill="#231F20"
                 d="M113.49,63.762c9.934,0,17.993-8.058,17.993-17.994s-8.059-17.994-17.993-17.994
 		c-9.935,0-17.99,8.058-17.99,17.994S103.555,63.762,113.49,63.762z"
               />
               <path
-                fill="#231F20"
                 d="M195.014,113.388c-9.934,0-17.994,8.057-17.994,17.99c0,9.938,8.061,17.995,17.994,17.995
 		c9.938,0,17.991-8.057,17.991-17.995C213.006,121.445,204.952,113.388,195.014,113.388z"
               />
