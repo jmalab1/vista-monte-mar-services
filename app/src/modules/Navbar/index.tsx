@@ -16,7 +16,6 @@ export const Navbar = () => {
   const dark = 'dim';
 
   const getInitialTheme = () => {
-    console.log(localStorage.getItem('theme'));
     return localStorage.getItem('theme') ?? light;
   };
 
@@ -72,7 +71,8 @@ export const Navbar = () => {
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </label>
-        <ul className="menu menu-horizontal px-1">
+
+        <ul className="menu menu-horizontal px-1 hidden lg:visible">
           {NAV_MENU.map(({ name, href }) => (
             <li>
               <a href={href}>{name}</a>
