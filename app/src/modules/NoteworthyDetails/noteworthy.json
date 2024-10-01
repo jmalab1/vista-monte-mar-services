@@ -1,82 +1,52 @@
 [
   {
-    "name": "Hacienda las Aguas",
-    "description": "Eco-friendly hotel and nature reserve.",
-    "distance": "10 km",
-    "type": "Accommodation",
+    "name": "Jaco Beach",
+    "description": "Famous beach for surfing and relaxation.",
+    "distance": "1.0 km",
+    "type": "Beach",
     "location": {
-      "latitude": 9.616,
-      "longitude": -84.621
+      "latitude": 9.6049,
+      "longitude": -84.6289
     }
   },
   {
-    "name": "Catedral de Jaco",
-    "description": "Local cathedral with beautiful architecture.",
-    "distance": "1.5 km",
-    "type": "Landmark",
+    "name": "Carara National Park",
+    "description": "Wildlife refuge with hiking trails.",
+    "distance": "9.0 km",
+    "type": "National Park",
     "location": {
-      "latitude": 9.601,
-      "longitude": -84.634
+      "latitude": 9.724,
+      "longitude": -84.6342
     }
   },
   {
     "name": "Jaco Walk",
-    "description": "Outdoor shopping and dining area.",
-    "distance": "0.8 km",
+    "description": "Popular pedestrian promenade with shops.",
+    "distance": "0.5 km",
     "type": "Shopping",
     "location": {
       "latitude": 9.6012,
-      "longitude": -84.635
+      "longitude": -84.634
     }
   },
   {
-    "name": "Mirador de Jaco",
-    "description": "Scenic viewpoint overlooking Jaco and the ocean.",
-    "distance": "3 km",
-    "type": "Viewpoint",
+    "name": "Pico Blanco",
+    "description": "A scenic viewpoint for hiking enthusiasts.",
+    "distance": "15.0 km",
+    "type": "Hiking",
     "location": {
-      "latitude": 9.603,
-      "longitude": -84.6415
+      "latitude": 9.6681,
+      "longitude": -84.6622
     }
   },
   {
-    "name": "Playa Hermosa",
-    "description": "Famous for surfing and its beautiful scenery.",
-    "distance": "3 km",
-    "type": "Beach",
+    "name": "Rainforest Adventures",
+    "description": "Zip-lining tours through the rainforest.",
+    "distance": "8.5 km",
+    "type": "Adventure Park",
     "location": {
-      "latitude": 9.6107,
-      "longitude": -84.6345
-    }
-  },
-  {
-    "name": "Galleria Jaco",
-    "description": "Shopping center with local boutiques and eateries.",
-    "distance": "1 km",
-    "type": "Shopping",
-    "location": {
-      "latitude": 9.6015,
-      "longitude": -84.6345
-    }
-  },
-  {
-    "name": "Hotel Cocal",
-    "description": "Beachfront hotel with a lively atmosphere.",
-    "distance": "0.5 km",
-    "type": "Accommodation",
-    "location": {
-      "latitude": 9.6015,
-      "longitude": -84.636
-    }
-  },
-  {
-    "name": "Jaco Art Gallery",
-    "description": "Gallery showcasing local artists and their work.",
-    "distance": "1.2 km",
-    "type": "Cultural",
-    "location": {
-      "latitude": 9.602,
-      "longitude": -84.6342
+      "latitude": 9.6198,
+      "longitude": -84.5859
     }
   }
 ]

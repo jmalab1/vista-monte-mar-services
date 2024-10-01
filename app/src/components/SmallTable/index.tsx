@@ -5,6 +5,12 @@ export type TSmallTableRecord = {
   type: string;
   distance: string;
   description: string;
+  location: TLatLong;
+};
+
+export type TLatLong = {
+  latitude: number;
+  longitude: number;
 };
 
 type TSmallTable = {
