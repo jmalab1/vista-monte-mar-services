@@ -6,7 +6,10 @@ const config: Config = withMT({
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require('daisyui')],
+  daisyui: {
+    themes: ['emerald', 'dim'],
+  },
 });
 
 export default config;

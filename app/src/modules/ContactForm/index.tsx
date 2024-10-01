@@ -28,14 +28,8 @@ const ContactForm = () => {
         </div>
       </div>
       <div className="mt-6 flex items-center justify-end gap-x-6 mr-4">
-        <ButtonItem
-          title="cancel"
-          classValue="border border-blue-500 text-blue-500 font-bold py-2 px-4 rounded"
-        />
-        <ButtonItem
-          title="submit"
-          classValue="bg-gradient-to-r from-blue-400 to-indigo-500 text-white font-bold py-2 px-4 rounded"
-        />
+        <ButtonItem title="cancel" classValue="btn-default" />
+        <ButtonItem title="submit" classValue="btn-primary" />
       </div>
     </form>
   );

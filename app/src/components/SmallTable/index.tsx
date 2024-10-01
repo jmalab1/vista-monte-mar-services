@@ -4,6 +4,7 @@ export type TSmallTableRecord = {
   name: string;
   type: string;
   distance: string;
+  description: string;
 };
 
 type TSmallTable = {

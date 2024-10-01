@@ -8,23 +8,21 @@ type TTextArea = {
 
 const TextArea: FunctionComponent<TTextArea> = ({ title, id, placeholder }) => {
   return (
-    <div className="col-span-full">
-      <label
-        htmlFor="about"
-        className="block text-left text-sm font-medium leading-6 text-gray-900"
-      >
-        {title}
-      </label>
-      <div className="mt-2">
-        <textarea
-          id={id}
-          name={id}
-          rows={6}
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 p-2"
-          placeholder={placeholder}
-        ></textarea>
+    <label className="form-control col-span-full">
+      <div className="label">
+        <span className="label-text">{title}</span>
+        <span className="label-text-alt"></span>
       </div>
-    </div>
+      <textarea
+        className="textarea textarea-bordered h-24"
+        id={id}
+        placeholder={placeholder}
+      ></textarea>
+      <div className="label">
+        <span className="label-text-alt"></span>
+        <span className="label-text-alt"></span>
+      </div>
+    </label>
   );
 };
 

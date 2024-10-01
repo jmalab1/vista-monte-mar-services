@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Surfing",
+    "description": "Catch waves on Jaco's surf-friendly beaches.",
+    "distance": "0 km",
+    "type": "Water Activity",
+    "location": {
+      "latitude": 9.6018,
+      "longitude": -84.6349
+    }
+  },
+  {
+    "name": "Visit Playa Hermosa",
+    "description": "Enjoy quieter beaches with bigger waves.",
+    "distance": "1.1 km",
+    "type": "Beach",
+    "location": {
+      "latitude": 9.6107,
+      "longitude": -84.6345
+    }
+  },
+  {
+    "name": "Rainforest Canopy Tour",
+    "description": "Zip-line through the rainforest for stunning views.",
+    "distance": "1.5 km",
+    "type": "Adventure",
+    "location": {
+      "latitude": 9.6112,
+      "longitude": -84.6156
+    }
+  },
+  {
+    "name": "Hiking at Miro Mountain",
+    "description": "Hike for panoramic views and graffiti art.",
+    "distance": "0.9 km",
+    "type": "Hiking",
+    "location": {
+      "latitude": 9.599,
+      "longitude": -84.633
+    }
+  },
+  {
+    "name": "Day Trip to Manuel Antonio National Park",
+    "description": "Explore wildlife and beautiful beaches.",
+    "distance": "70 km",
+    "type": "Nature",
+    "location": {
+      "latitude": 9.3918,
+      "longitude": -84.1455
+    }
+  },
+  {
+    "name": "Explore Jaco’s Nightlife",
+    "description": "Experience lively bars and clubs.",
+    "distance": "0 km",
+    "type": "Entertainment",
+    "location": {
+      "latitude": 9.6018,
+      "longitude": -84.6349
+    }
+  },
+  {
+    "name": "Horseback Riding to Waterfalls",
+    "description": "Ride to hidden waterfalls and swim.",
+    "distance": "2.0 km",
+    "type": "Outdoor Activity",
+    "location": {
+      "latitude": 9.603,
+      "longitude": -84.6102
+    }
+  },
+  {
+    "name": "Crocodile Tour on the Tárcoles River",
+    "description": "See crocodiles and exotic birds on a boat tour.",
+    "distance": "8.1 km",
+    "type": "Wildlife Tour",
+    "location": {
+      "latitude": 9.669,
+      "longitude": -84.6414
+    }
+  },
+  {
+    "name": "ATV Adventure",
+    "description": "Ride ATVs through jungle and mountains.",
+    "distance": "1.8 km",
+    "type": "Adventure",
+    "location": {
+      "latitude": 9.604,
+      "longitude": -84.62
+    }
+  },
+  {
+    "name": "Fishing Charters",
+    "description": "Charter boats for sportfishing adventures.",
+    "distance": "0.3 km",
+    "type": "Water Activity",
+    "location": {
+      "latitude": 9.605,
+      "longitude": -84.634
+    }
+  },
+  {
+    "name": "Yoga on the Beach",
+    "description": "Relax with beachside yoga classes.",
+    "distance": "0 km",
+    "type": "Wellness",
+    "location": {
+      "latitude": 9.6018,
+      "longitude": -84.6349
+    }
+  }
+]

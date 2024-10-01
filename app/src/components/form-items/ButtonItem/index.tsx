@@ -7,10 +7,7 @@ type TButton = {
 
 const ButtonItem: FunctionComponent<TButton> = ({ title, classValue }) => {
   return (
-    <button
-      type="button"
-      className={`text-sm font-semibold leading-6 ${classValue}`}
-    >
+    <button type="button" className={`btn btn-sm ${classValue}`}>
       {title}
     </button>
   );

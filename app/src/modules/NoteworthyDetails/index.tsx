@@ -1,15 +1,8 @@
 import MapAndTable from '../MapAndTable';
-
-const Noteworthy = [
-  {
-    name: 'Bar',
-    type: 'Late Night Activity',
-    distance: '1.2 miles',
-  },
-];
+import noteworthy from './noteworthy.json';
 
 export const NoteworthyDetails = () => {
-  return <MapAndTable records={Noteworthy} title="Noteworthy" />;
+  return <MapAndTable records={noteworthy} title="Noteworthy" />;
 };
 
 export default NoteworthyDetails;

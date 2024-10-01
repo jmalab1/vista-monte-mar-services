@@ -1,0 +1,27 @@
+import { FunctionComponent } from 'react';
+import { TSmallTableRecord } from '../../SmallTable';
+
+type TMiniCard = {
+  record: TSmallTableRecord;
+};
+
+const MiniCard: FunctionComponent<TMiniCard> = ({ record }) => {
+  return (
+    <div className="flex items-start rounded-xl bg-white p-2 border-solid border-2 cursor-pointer hover:bg-gray-100">
+      <div className="ml-2">
+        <p className="font-semibold text-xs">
+          {record.name}{' '}
+          <span className="mt-2 text-gray-600 content-center">
+            ({record.type})
+          </span>
+        </p>
+        <p className="mt-2 text-xs text-gray-600">{record.description}</p>
+        <p className="mt-2 text-xs text-gray-600">
+          Distance: {record.distance}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default MiniCard;

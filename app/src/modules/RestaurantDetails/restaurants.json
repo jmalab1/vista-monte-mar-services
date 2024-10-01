@@ -1,65 +1,102 @@
 [
   {
-    "name": "Graffiti Restro Cafe and Wine Bar",
-    "type": "Fusion",
-    "location": { "lat": 9.6147, "lon": -84.6266 },
-    "description": "A chic, upscale restaurant offering a blend of locally sourced dishes with Cajun flair.",
-    "distance": "2.5 km"
+    "name": "El Hicaco",
+    "description": "Seafood restaurant with ocean views.",
+    "distance": "0.9 km",
+    "type": "Seafood",
+    "location": {
+      "latitude": 9.6018,
+      "longitude": -84.634
+    }
   },
   {
-    "name": "Lemon Zest",
-    "type": "International Cuisine",
-    "location": { "lat": 9.617, "lon": -84.6287 },
-    "description": "Fine dining with a focus on international dishes, including New York strip steak and seafood.",
-    "distance": "2.3 km"
+    "name": "Los Amigos",
+    "description": "Casual eatery offering local and international dishes.",
+    "distance": "0.6 km",
+    "type": "International",
+    "location": {
+      "latitude": 9.601,
+      "longitude": -84.635
+    }
   },
   {
-    "name": "El Hicaco Seafood",
-    "type": "Costa Rican/Seafood",
-    "location": { "lat": 9.6215, "lon": -84.6289 },
-    "description": "Stunning beachfront dining, known for fresh seafood like shrimp & rice or octopus burrata.",
-    "distance": "2.0 km"
+    "name": "Pizza Pata",
+    "description": "Famous for its delicious pizzas and laid-back vibe.",
+    "distance": "0.5 km",
+    "type": "Pizza",
+    "location": {
+      "latitude": 9.602,
+      "longitude": -84.6345
+    }
   },
   {
-    "name": "Tacobar Jaco",
-    "type": "Tacos",
-    "location": { "lat": 9.6191, "lon": -84.6272 },
-    "description": "A casual spot offering a variety of tacos with fresh ingredients.",
-    "distance": "2.1 km"
+    "name": "Taco Bar",
+    "description": "Tacos and Mexican fare in a casual setting.",
+    "distance": "1.1 km",
+    "type": "Mexican",
+    "location": {
+      "latitude": 9.6012,
+      "longitude": -84.6355
+    }
   },
   {
-    "name": "Koko Gastro Pub",
-    "type": "Beachfront Gastro Bar",
-    "location": { "lat": 9.6148, "lon": -84.6281 },
-    "description": "Relaxed beachfront pub with ocean views, serving seafood and varied cuisine.",
-    "distance": "2.7 km"
-  },
-  {
-    "name": "Puddlefish Brewery",
-    "type": "Brewery/Pub",
-    "location": { "lat": 9.6145, "lon": -84.6269 },
-    "description": "A local craft brewery offering gourmet pub food like wraps, burgers, and nachos.",
-    "distance": "2.6 km"
-  },
-  {
-    "name": "Soda Rustica",
+    "name": "Restaurante Costa del Sol",
+    "description": "Local cuisine with a cozy atmosphere.",
+    "distance": "1.3 km",
     "type": "Costa Rican",
-    "location": { "lat": 9.6211, "lon": -84.6275 },
-    "description": "A traditional Costa Rican soda offering casado lunches with local flavor.",
-    "distance": "1.9 km"
+    "location": {
+      "latitude": 9.6025,
+      "longitude": -84.6335
+    }
   },
   {
-    "name": "Sabress Kosher Restaurant",
-    "type": "Mediterranean/Israeli",
-    "location": { "lat": 9.6198, "lon": -84.6278 },
-    "description": "Kosher Mediterranean food, including falafels, hummus, and shakshuka in a family-friendly setting.",
-    "distance": "2.1 km"
+    "name": "Mahi Mahi",
+    "description": "Fresh seafood and a vibrant atmosphere.",
+    "distance": "0.7 km",
+    "type": "Seafood",
+    "location": {
+      "latitude": 9.6015,
+      "longitude": -84.6342
+    }
   },
   {
-    "name": "Zona K Bistro",
+    "name": "Jaco Taco",
+    "description": "Popular for its tasty tacos and friendly service.",
+    "distance": "1.0 km",
+    "type": "Mexican",
+    "location": {
+      "latitude": 9.6025,
+      "longitude": -84.6348
+    }
+  },
+  {
+    "name": "Cafe Del Mar",
+    "description": "Beachfront cafe offering coffee and snacks.",
+    "distance": "0.3 km",
+    "type": "Cafe",
+    "location": {
+      "latitude": 9.6018,
+      "longitude": -84.6349
+    }
+  },
+  {
+    "name": "Soda Jaco",
+    "description": "Local sodas serving traditional Costa Rican dishes.",
+    "distance": "1.5 km",
+    "type": "Casual Dining",
+    "location": {
+      "latitude": 9.601,
+      "longitude": -84.6355
+    }
+  },
+  {
+    "name": "Zoe's",
+    "description": "Elegant dining with a fusion menu.",
+    "distance": "1.2 km",
     "type": "Fusion",
-    "location": { "lat": 9.6145, "lon": -84.628 },
-    "description": "Latin, Asian, and Continental fusion dishes in a small gourmet restaurant.",
-    "distance": "2.7 km"
+    "location": {
+      "latitude": 9.6018,
+      "longitude": -84.6342
+    }
   }
 ]
