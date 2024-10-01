@@ -1,91 +1,86 @@
-import React from 'react';
-import { Navbar as MTNavbar, Typography } from '@material-tailwind/react';
-import { PhotoIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
+import { useEffect, useState } from 'react';
 
 const NAV_MENU = [
   {
     name: 'Jaco Beach',
-    icon: PhotoIcon,
     href: '#jaco_beach',
   },
   {
     name: 'Contact Us',
-    icon: EnvelopeIcon,
     href: '#contact',
   },
 ];
 
-interface NavItemProps {
-  children: React.ReactNode;
-  href?: string;
-}
-
-function NavItem({ children, href }: NavItemProps) {
-  return (
-    <li>
-      <Typography
-        as="a"
-        href={href || '#'}
-        variant="paragraph"
-        color="gray"
-        className="flex items-center gap-2 font-medium text-gray-900"
-        placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
-      >
-        {children}
-      </Typography>
-    </li>
-  );
-}
-
 export const Navbar = () => {
-  const [open, setOpen] = React.useState(false);
+  const light = 'emerald';
+  const dark = 'dim';
 
-  function handleOpen() {
-    setOpen((cur) => !cur);
-  }
+  const getInitialTheme = () => {
+    console.log(localStorage.getItem('theme'));
+    return localStorage.getItem('theme') ?? light;
+  };
 
-  React.useEffect(() => {
-    window.addEventListener(
-      'resize',
-      () => window.innerWidth >= 960 && setOpen(false)
-    );
-  }, []);
+  const [theme, setTheme] = useState(getInitialTheme());
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme); // Save the user's preference
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === light ? dark : light));
+  };
 
   return (
-    <MTNavbar
-      shadow={false}
-      fullWidth
-      className="border-0 sticky top-0 z-50 justify-right"
-      placeholder={undefined}
-      onPointerEnterCapture={undefined}
-      onPointerLeaveCapture={undefined}
-    >
-      <div className="mx-8 flex">
-        <div className="w-1/2 justify-items-start">
-          <Typography
-            color="blue-gray"
-            className="text-lg font-bold text-black"
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            Vista Monte Mar
-          </Typography>
-        </div>
-        <div className="w-1/2 justify-items-end">
-          <ul className="gap-8 lg:flex">
-            {NAV_MENU.map(({ name, icon: Icon, href }) => (
-              <NavItem key={name} href={href}>
-                <Icon className="h-5 w-5" />
-                {name}
-              </NavItem>
-            ))}
-          </ul>
-        </div>
+    <div className="navbar bg-base-100">
+      <div className="flex-1">
+        <a className="btn btn-ghost text-xl">Vista Monte Mar</a>
       </div>
-    </MTNavbar>
+      <div className="flex-none">
+        <label className="flex cursor-pointer gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="5" />
+            <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+          </svg>
+          <input
+            type="checkbox"
+            checked={theme === dark}
+            onClick={toggleTheme}
+            className="toggle theme-controller"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </label>
+        <ul className="menu menu-horizontal px-1">
+          {NAV_MENU.map(({ name, href }) => (
+            <li>
+              <a href={href}>{name}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 };
 
