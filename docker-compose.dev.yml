@@ -45,6 +45,11 @@ services:
     networks:
       - main
 
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025" # SMTP server
+
 networks:
   main:
     driver: bridge
