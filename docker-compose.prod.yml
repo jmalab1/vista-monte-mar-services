@@ -21,7 +21,7 @@ services:
       - main
 
   app:
-    image: jmalab24/costa-rica-condo-app:latest
+    image: jmalab24/vista-monte-mar-app:latest
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(`casajadecr.com`)"
@@ -38,14 +38,17 @@ services:
       # CSP
       - "traefik.http.middlewares.csp.headers.customResponseHeaders.Content-Security-Policy=default-src 'none'; script-src 'self' https://unpkg.com; style-src 'self' https://unpkg.com; img-src 'self' https://tile.openstreetmap.org; connect-src 'self'; font-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
       - "traefik.http.routers.app.middlewares=csp@docker"
-
     networks:
       - main
 
-  mailhog:
-    image: mailhog/mailhog
-    ports:
-      - "1025:1025" # SMTP server
+  server:
+    image: jmalab24/vista-monte-mar-be:latest
+    labels:
+      - "traefik.http.routers.node-app.rule=Host(`casajadecr.com`)" # Replace with your API subdomain
+      - "traefik.http.routers.node-app.entrypoints=websecure"
+      - "traefik.http.routers.node-app.tls.certresolver=myresolver"
+    networks:
+      - main
 
 networks:
   main:
