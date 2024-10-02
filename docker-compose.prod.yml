@@ -8,6 +8,9 @@ services:
       - "--providers.docker=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure" # Redirect HTTP to HTTPS
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entryPoint.permanent=true" # Permanent redirect (301)
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true" # Use TLS challenge
       - "--certificatesresolvers.myresolver.acme.email=${EMAIL}" # Your email for ACME
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json" # Path to ACME storage
