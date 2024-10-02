@@ -93,7 +93,7 @@ export const Category = () => {
               guests, it features modern amenities, a pool, and easy access to
               local adventures. Book now for your Costa Rica getaway!s
             </p>
-            <div className="flex gap-6 text-white place-self-center">
+            <div className="flex gap-6 text-white justify-center">
               <AbbLogo size={40} />
               <VrboLogo size={40} />
             </div>
