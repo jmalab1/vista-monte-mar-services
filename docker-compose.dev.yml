@@ -48,11 +48,6 @@ services:
 
   server:
     image: jmalab24/vista-monte-mar-be:latest
-    restart: always
-    labels:
-      - "traefik.http.routers.node-app.rule=Host(`localhost`)" # Replace with your API subdomain
-      - "traefik.http.routers.node-app.entrypoints=websecure"
-      - "traefik.http.routers.node-app.tls.certresolver=myresolver"
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
       - EMAIL=${EMAIL}
