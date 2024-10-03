@@ -47,6 +47,11 @@ services:
       - "traefik.http.routers.node-app.rule=Host(`casajadecr.com`)" # Replace with your API subdomain
       - "traefik.http.routers.node-app.entrypoints=websecure"
       - "traefik.http.routers.node-app.tls.certresolver=myresolver"
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
+      - EMAIL=${EMAIL}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
     networks:
       - main
 
