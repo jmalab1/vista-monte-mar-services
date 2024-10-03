@@ -36,7 +36,7 @@ services:
       - "traefik.http.routers.app.middlewares=ratelimit@docker"
 
       # CSP
-      - "traefik.http.middlewares.csp.headers.customResponseHeaders.Content-Security-Policy=default-src 'none'; script-src 'self' https://unpkg.com; style-src 'self' https://unpkg.com; img-src 'self' https://tile.openstreetmap.org; connect-src 'self'; font-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+      - "traefik.http.middlewares.csp.headers.customResponseHeaders.Content-Security-Policy=default-src 'none'; script-src 'self' https://unpkg.com; style-src 'self' https://unpkg.com; img-src 'self' https://tile.openstreetmap.org; connect-src 'self' https://localhost:8135; font-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
       - "traefik.http.routers.app.middlewares=csp@docker"
     networks:
       - main
@@ -48,6 +48,12 @@ services:
       - EMAIL=${EMAIL}
       - SMTP_USER=${SMTP_USER}
       - SMTP_PASS=${SMTP_PASS}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.server.rule=Host(`casajadecr.com`) && PathPrefix(`/api`)"
+      - "traefik.http.services.server.loadbalancer.server.port=8135"
+      - "traefik.http.routers.server.entrypoints=websecure"
+      - "traefik.http.routers.server.tls.certresolver=myresolver"
     networks:
       - main
 
