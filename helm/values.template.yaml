@@ -1,0 +1,11 @@
+app:
+  image: jmalab24/vista-monte-mar-app:latest
+  
+server:
+  image: jmalab24/vista-monte-mar-be:latest
+ 
+environment:
+    ENVIRONMENT: "production"
+    EMAIL: ""
+    SMTP_USER: ""
+    SMTP_PASS: ""
