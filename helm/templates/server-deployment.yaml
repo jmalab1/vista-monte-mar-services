@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - name: server
+        image: {{ .Values.server.image }}
+        ports:
+        - containerPort: 8135
+        env:
+        - name: SMTP_USER
+          value: {{ .Values.environment.SMTP_USER }}
+        - name: SMTP_PASS
+          value: {{ .Values.environment.SMTP_PASS }}

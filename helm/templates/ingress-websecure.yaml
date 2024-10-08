@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress-websecure
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"  # Assuming cert-manager is used
+spec:
+  tls:
+    - hosts:
+        - k3s.casajadecr.com
+      secretName: app-tls
+  rules:
+  - host: k3s.casajadecr.com  # Replace with your domain or droplet IP
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app
+            port:
+              number: 80
