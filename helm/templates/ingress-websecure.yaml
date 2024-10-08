@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - k3s.casajadecr.com
+        - {{ .Values.domain }}
       secretName: app-tls
   rules:
-  - host: k3s.casajadecr.com  # Replace with your domain or droplet IP
+  - host: {{ .Values.domain }}  # Replace with your domain or droplet IP
     http:
       paths:
       - path: /

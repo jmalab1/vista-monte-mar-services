@@ -6,7 +6,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-  - host: k3s.casajadecr.com  # Replace with your domain or droplet IP
+  - host: {{ .Values.domain }}  # Replace with your domain or droplet IP
     http:
       paths:
       - path: /

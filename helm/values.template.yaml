@@ -9,3 +9,5 @@ environment:
     EMAIL: ""
     SMTP_USER: ""
     SMTP_PASS: ""
+
+domain: "localhost"
