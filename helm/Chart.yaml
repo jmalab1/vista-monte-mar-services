@@ -3,3 +3,8 @@ name: vista-monte-mar
 description: Vista Monte Mar - CasajadeCR Helm Chart
 version: 0.1.0
 appVersion: "1.0.0"
+
+dependencies:
+  - name: cert-manager
+    version: "v1.16.1"
+    repository: "https://charts.jetstack.io"
