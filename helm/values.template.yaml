@@ -11,3 +11,4 @@ environment:
     SMTP_PASS: ""
 
 domain: "localhost"
+namespace: vista-monte-mar
