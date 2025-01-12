@@ -4,7 +4,7 @@ metadata:
   name: app
   namespace: {{ .Values.namespace }}
 spec:
-  type: {{ if .Values.environment.ENVIRONMENT | eq "production" }}ClusterIP{{ else }}NodePort{{ end }}
+  type: {{ if .Values.environment.SPACE | eq "production" }}ClusterIP{{ else }}NodePort{{ end }}
   selector:
     app: app
   ports:
