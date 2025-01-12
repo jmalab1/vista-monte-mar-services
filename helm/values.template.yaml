@@ -10,8 +10,5 @@ environment:
     SMTP_USER: ""
     SMTP_PASS: ""
 
-ingress:
-  type: ClusterIP  # Production - ClusterIP; Development - NodePort  ... this only really exposes app service
-
 domain: "localhost"
 namespace: vista-monte-mar
