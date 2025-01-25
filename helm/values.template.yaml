@@ -9,10 +9,11 @@ server:
     dev: jmalab24/vista-monte-mar-be:dev
  
 environment:
-  SPACE: "production"
+  SPACE: "development"
   EMAIL: ""
   SMTP_USER: ""
   SMTP_PASS: ""
+  SEND_TO: ""
 
 domain: "localhost"
 namespace: vista-monte-mar
