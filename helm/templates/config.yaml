@@ -8,7 +8,7 @@ spec:
     ports:
       websecure:
         tls:
-          enabled: true
+          enabled: {{ if .Values.environment.SPACE | eq "production" }}true{{ else }}false{{ end }}
       web:
         redirectTo:
           port: websecure

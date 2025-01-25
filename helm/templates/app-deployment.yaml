@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: app
-        image: {{ .Values.app.image }}
+        image: {{ if .Values.environment.SPACE | eq "production" }}{{ .Values.app.images.prod }}{{ else }}{{ .Values.app.images.dev }}{{ end }}
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         env:

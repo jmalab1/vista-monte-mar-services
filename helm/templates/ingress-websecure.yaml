@@ -8,10 +8,12 @@ metadata:
     traefik.ingress.kubernetes.io/router.tls: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"  # Assuming cert-manager is used
 spec:
+  {{ if .Values.environment.SPACE | eq "production" }}
   tls:
     - hosts:
         - {{ .Values.domain }}
       secretName: app-tls
+  {{ end }}
   rules:
   - host: {{ .Values.domain }}  # Replace with your domain or droplet IP
     http:

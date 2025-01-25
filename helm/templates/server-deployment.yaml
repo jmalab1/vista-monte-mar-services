@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: server
-        image: {{ .Values.server.image }}
+        image: {{ if .Values.environment.SPACE | eq "production" }}{{ .Values.server.images.prod }}{{ else }}{{ .Values.server.images.dev }}{{ end }}
+        imagePullPolicy: Always
         ports:
         - containerPort: 8135
         env:
@@ -23,3 +24,5 @@ spec:
           value: {{ .Values.environment.SMTP_USER }}
         - name: SMTP_PASS
           value: {{ .Values.environment.SMTP_PASS }}
+        - name: SEND_TO
+          value: {{ .Values.environment.SEND_TO }}

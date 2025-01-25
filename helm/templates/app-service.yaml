@@ -4,9 +4,10 @@ metadata:
   name: app
   namespace: {{ .Values.namespace }}
 spec:
-  type: ClusterIP
+  type: {{ if .Values.environment.SPACE | eq "production" }}ClusterIP{{ else }}NodePort{{ end }}
   selector:
     app: app
   ports:
   - port: 80
     targetPort: 80
+    nodePort: 30080

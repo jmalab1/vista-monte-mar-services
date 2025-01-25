@@ -1,14 +1,19 @@
 app:
-  image: jmalab24/vista-monte-mar-app:latest
+  images:
+    prod: jmalab24/vista-monte-mar-app:latest
+    dev: jmalab24/vista-monte-mar-app:dev
   
 server:
-  image: jmalab24/vista-monte-mar-be:latest
+  images: 
+    prod: jmalab24/vista-monte-mar-be:latest
+    dev: jmalab24/vista-monte-mar-be:dev
  
 environment:
-    ENVIRONMENT: "production"
-    EMAIL: ""
-    SMTP_USER: ""
-    SMTP_PASS: ""
+  SPACE: "development"
+  EMAIL: ""
+  SMTP_USER: ""
+  SMTP_PASS: ""
+  SEND_TO: ""
 
 domain: "localhost"
 namespace: vista-monte-mar
