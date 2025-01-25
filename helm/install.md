@@ -15,8 +15,8 @@ sudo kubectl config set-context --current --namespace vista-monte-mar
 
 helm dependency update
 
-helm install vista-monte-mar . -n vista-monte-mar
-helm upgrade --install vista-monte-mar . -n vista-monte-mar
+helm install vmm . -n vista-monte-mar
+helm upgrade --install vmm . -n vista-monte-mar
 ```
 
 Delete Namespace
