@@ -14,6 +14,8 @@ environment:
   SMTP_USER: ""
   SMTP_PASS: ""
   SEND_TO: ""
+  POSTGRES_DB: "vmm-db"
+  POSTGRES_USER: "vmm"
 
 domain: "localhost"
 namespace: vista-monte-mar
