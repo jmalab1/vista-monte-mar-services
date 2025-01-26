@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-scripts
+data:
+  init.sql: |
+    CREATE TABLE IF NOT EXISTS messages (
+      id SERIAL PRIMARY KEY,
+      fname VARCHAR(100),
+      lname VARCHAR(100),
+      email VARCHAR(100),
+      phone VARCHAR(100),
+      comment text
+    );

@@ -1,59 +1,86 @@
 #!/bin/bash
 
-# pass - adminadminadmin
+# Define variables
+PORTAINER_NAMESPACE="portainer"
+PORTAINER_POD_NAME="portainer"
+PORTAINER_VERSION="latest"
 
-# Set variables
-NAMESPACE="portainer"
-RELEASE_NAME="portainer"
-NODE_PORT=30081
-HELM_REPO="https://portainer.github.io/k8s/"
-HELM_REPO_NAME="portainer"
+# Create namespace for Portainer
+echo "Creating namespace for Portainer..."
+kubectl create namespace $PORTAINER_NAMESPACE
 
-# Step 1: Add Helm repository (only if it doesn't already exist)
-echo "Checking if Portainer Helm repository is added..."
-helm repo list | grep -q "$HELM_REPO_NAME" || {
-    echo "Adding Portainer Helm repository..."
-    helm repo add $HELM_REPO_NAME $HELM_REPO
-    helm repo update
-}
+# Create Persistent Volume and Persistent Volume Claim for Portainer data
+echo "Creating Persistent Volume and Persistent Volume Claim for Portainer data..."
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: portainer-data-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data/portainer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: portainer-data-pvc
+  namespace: $PORTAINER_NAMESPACE
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+EOF
 
-# Step 2: Create namespace if it doesn't exist
-echo "Checking if namespace $NAMESPACE exists..."
-kubectl get namespace $NAMESPACE &>/dev/null || {
-    echo "Creating namespace $NAMESPACE..."
-    kubectl create namespace $NAMESPACE
-}
+# Deploy Portainer using Kubernetes deployment
+echo "Deploying Portainer..."
+kubectl apply -f - <<EOF
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portainer
+  namespace: $PORTAINER_NAMESPACE
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portainer
+  template:
+    metadata:
+      labels:
+        app: portainer
+    spec:
+      containers:
+        - name: portainer
+          image: portainer/portainer-ce:$PORTAINER_VERSION
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - name: portainer-data
+              mountPath: /data
+      volumes:
+        - name: portainer-data
+          persistentVolumeClaim:
+            claimName: portainer-data-pvc
+EOF
 
-# Step 3: Install or upgrade Portainer using Helm
-echo "Checking if Portainer is installed..."
-helm status $RELEASE_NAME -n $NAMESPACE &>/dev/null
+# Expose Portainer as a NodePort service (or LoadBalancer if using cloud provider)
+echo "Creating NodePort service for Portainer..."
+kubectl expose deployment portainer \
+  --name=portainer-service \
+  --namespace=$PORTAINER_NAMESPACE \
+  --type=NodePort \
+  --port=9000 \
+  --target-port=9000
 
-if [ $? -eq 0 ]; then
-    echo "Portainer is already installed, upgrading..."
-    helm upgrade $RELEASE_NAME $HELM_REPO_NAME/portainer --namespace $NAMESPACE
-else
-    echo "Installing Portainer..."
-    helm install $RELEASE_NAME $HELM_REPO_NAME/portainer --namespace $NAMESPACE
-fi
+# Get the NodePort to access Portainer externally
+PORTAINER_NODE_PORT=$(kubectl get svc portainer-service -n $PORTAINER_NAMESPACE -o jsonpath='{.spec.ports[0].nodePort}')
 
-# Step 4: Wait for Portainer to be deployed
-echo "Waiting for Portainer to be deployed..."
-kubectl rollout status deployment/portainer -n $NAMESPACE
-
-# Step 5: Expose Portainer using NodePort (only if not already exposed)
-echo "Checking if Portainer service is of type NodePort..."
-SERVICE_TYPE=$(kubectl get svc portainer -n $NAMESPACE -o=jsonpath='{.spec.type}')
-
-if [ "$SERVICE_TYPE" != "NodePort" ]; then
-    echo "Exposing Portainer using NodePort on port $NODE_PORT..."
-    kubectl patch svc portainer -n $NAMESPACE \
-      -p '{"spec": {"type": "NodePort", "ports": [{"port": 9000, "targetPort": 9000, "nodePort": '$NODE_PORT'}]}}'
-else
-    echo "Portainer service is already exposed as NodePort."
-fi
-
-# Step 6: Verify the service
-echo "Verifying Portainer service..."
-kubectl get svc portainer -n $NAMESPACE
-
-echo "Portainer is accessible on http://<NODE_IP>:$NODE_PORT"
+# Display the URL for accessing Portainer
+echo "Portainer is now installed and accessible via NodePort."
+echo "Access Portainer UI at: http://<node-ip>:$PORTAINER_NODE_PORT"
