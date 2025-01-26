@@ -1,10 +1,28 @@
+Install k3s
+```
+curl -sfL https://get.k3s.io | sh -
+```
+
+Allow non-root user to do kubectl
+```
+sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+```
+
+Installing Helm
+```
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+```
+
 Install Cert Manager
 ```
 helm repo add jetstack https://charts.jetstack.io
 
 helm repo update
 
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.16.0
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.16.3
 ```
 
 Install Helm Chart
