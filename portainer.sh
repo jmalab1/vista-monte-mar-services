@@ -37,6 +37,39 @@ spec:
       storage: 1Gi
 EOF
 
+# Create ClusterRole for Portainer to access Kubernetes resources
+echo "Creating ClusterRole for Portainer..."
+kubectl apply -f - <<EOF
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: portainer-role
+rules:
+  - apiGroups: [""]
+    resources: ["namespaces", "pods", "services", "deployments"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch"]
+EOF
+
+# Bind ClusterRole to the default service account in the portainer namespace
+echo "Creating ClusterRoleBinding for Portainer..."
+kubectl apply -f - <<EOF
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: portainer-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: $PORTAINER_NAMESPACE
+roleRef:
+  kind: ClusterRole
+  name: portainer-role
+  apiGroup: rbac.authorization.k8s.io
+EOF
+
 # Deploy Portainer using Kubernetes deployment
 echo "Deploying Portainer..."
 kubectl apply -f - <<EOF
