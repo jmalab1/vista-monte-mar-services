@@ -1,0 +1,50 @@
+services:
+  app:
+    image: vista-monte-mar-app
+    container_name: app
+    environment:
+      DOMAIN: localhost
+    ports:
+      - "8080:80"
+    networks:
+      - devnet
+    depends_on:
+      - server
+
+  server:
+    image: vista-monte-mar-server
+    container_name: server
+    environment:
+      SMTP_USER: system@casajadecr.com
+      SMTP_PASS: FGs4M7bRKy9#3N!j
+      SEND_TO: jmalabanan@casajadecr.com
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: my_db
+    ports:
+      - "8135:8135"
+    networks:
+      - devnet
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: my_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - devnet
+
+volumes:
+  postgres_data:
+
+networks:
+  devnet:
+    driver: bridge
