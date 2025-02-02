@@ -2,6 +2,7 @@ services:
   app:
     image: vista-monte-mar-app
     container_name: app
+    restart: always
     environment:
       DOMAIN: localhost
     ports:
@@ -14,6 +15,7 @@ services:
   server:
     image: vista-monte-mar-server
     container_name: server
+    restart: always
     environment:
       SMTP_USER: system@casajadecr.com
       SMTP_PASS: FGs4M7bRKy9#3N!j
@@ -31,6 +33,7 @@ services:
   postgres:
     image: postgres:latest
     container_name: postgres
+    restart: always
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: secret
