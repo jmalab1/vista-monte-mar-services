@@ -26,3 +26,12 @@ spec:
           value: {{ .Values.environment.SMTP_PASS }}
         - name: SEND_TO
           value: {{ .Values.environment.SEND_TO }}
+        - name: POSTGRES_USER
+          value: {{ .Values.environment.POSTGRES_USER }}
+        - name: POSTGRES_DB
+          value: {{ .Values.environment.POSTGRES_DB }}
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
