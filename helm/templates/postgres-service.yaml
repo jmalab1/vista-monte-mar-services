@@ -9,4 +9,11 @@ spec:
     - protocol: TCP
       port: 5432
       targetPort: 5432
-  clusterIP: None
+      {{- if .Values.environment.SPACE | eq "development" }}
+      nodePort: 30088 # Adjust to your desired port for NodePort
+      {{- end }}
+  {{- if .Values.environment.SPACE | eq "development" }}
+  type: NodePort
+  {{- else }}
+  type: ClusterIP
+  {{- end }}

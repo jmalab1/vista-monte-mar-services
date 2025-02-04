@@ -34,10 +34,6 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.16.3
 ```
 
-Create Secret
-kubectl create secret generic postgres-secret --from-literal=postgres-password=vmm-pass
-
-
 Install Helm Chart
 ```
 kubectl create namespace vista-monte-mar

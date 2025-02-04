@@ -16,6 +16,7 @@ environment:
   SEND_TO: ""
   POSTGRES_DB: "vmm-db"
   POSTGRES_USER: "vmm"
+  POSTGRES_PASS: ""
 
 domain: "localhost"
 namespace: vista-monte-mar
