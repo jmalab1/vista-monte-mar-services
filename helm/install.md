@@ -27,11 +27,8 @@ sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 Install Cert Manager
 ```
 helm repo add jetstack https://charts.jetstack.io
-
 helm repo update
-
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.16.3
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true
 ```
 
 Install Helm Chart
