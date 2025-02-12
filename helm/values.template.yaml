@@ -1,11 +1,11 @@
 app:
   images:
-    prod: jmalab24/vista-monte-mar-app:latest
+    prod: jmalab24/vista-monte-mar-app:main
     dev: jmalab24/vista-monte-mar-app:dev
   
 server:
   images: 
-    prod: jmalab24/vista-monte-mar-be:latest
+    prod: jmalab24/vista-monte-mar-be:main
     dev: jmalab24/vista-monte-mar-be:dev
  
 environment:
