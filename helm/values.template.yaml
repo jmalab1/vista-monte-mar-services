@@ -7,7 +7,7 @@ server:
   images: 
     prod: jmalab24/vista-monte-mar-be:main
     dev: jmalab24/vista-monte-mar-be:dev
- 
+    
 environment:
   SPACE: "development"
   EMAIL: ""
@@ -17,6 +17,7 @@ environment:
   POSTGRES_DB: "vmm-db"
   POSTGRES_USER: "vmm"
   POSTGRES_PASS: ""
+  AUTH_SECRET_KEY: ""
 
 domain: "localhost"
 namespace: vista-monte-mar
