@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: server
+      annotations:
+        checksum/config: {{ now | date "20060102150405" | quote }}
     spec:
       containers:
       - name: server
