@@ -13,7 +13,7 @@ spec:
       labels:
         app: server
       annotations:
-        checksum/config: {{ randAlphaNum 5 | quote }}
+        checksum/config: {{ now | date "20060102150405" | quote }}
     spec:
       containers:
       - name: server
