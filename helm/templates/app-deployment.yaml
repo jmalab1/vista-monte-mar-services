@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: app
+      annotations:
+        checksum/config: {{ randAlphaNum 5 | quote }}
     spec:
       containers:
       - name: app
