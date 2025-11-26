@@ -17,13 +17,13 @@ services:
     container_name: server
     restart: always
     environment:
-      SMTP_USER: system@casajadecr.com
-      SMTP_PASS: FGs4M7bRKy9#3N!j
-      SEND_TO: jmalabanan@casajadecr.com
+      SMTP_USER:
+      SMTP_PASS:
+      SEND_TO:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: my_db
-      AUTH_SECRET_KEY: 345e84d24627c3052b687b0b99b6461e6702c4e486e73de82ed980e14a39f4a6
+      AUTH_SECRET_KEY:
     ports:
       - "8135:8135"
     networks:
