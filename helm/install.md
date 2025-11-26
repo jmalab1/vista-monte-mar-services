@@ -15,14 +15,20 @@ chmod 700 get_helm.sh
 ./get_helm.sh
 ```
 
+When running into this issue
+```
+Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp 127.0.0.1:8080: connect: connection refused
+
+run the following
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+```
+
 Install Cert Manager
 ```
 helm repo add jetstack https://charts.jetstack.io
-
 helm repo update
-
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.16.3
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true
 ```
 
 Install Helm Chart
@@ -37,6 +43,7 @@ helm install vmm . -n vista-monte-mar
 helm upgrade --install vmm . -n vista-monte-mar
 ```
 
+
 Delete Namespace
 ```
 kubectl delete namespace vista-monte-mar
@@ -50,6 +57,8 @@ kubectl get all -n vista-monte-mar
 Portainer
 ```
 kubectl apply -n portainer -f https://raw.githubusercontent.com/portainer/k8s/master/deploy/manifests/portainer/portainer.yaml
+
+Available at http://jm-vivo.porgy-bass.ts.net:30777
 
 kubectl delete deployments.apps/portainer -n portainer && kubectl delete service portainer -n portainer && kubectl delete serviceaccount -n portainer portainer-sa-clusteradmin && kubectl delete pvc portainer -n portainer && kubectl delete clusterrolebinding portainer && kubectl delete namespace portainer && rm -f portainer.yaml
 ```

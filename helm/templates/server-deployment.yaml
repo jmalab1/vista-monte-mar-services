@@ -3,6 +3,10 @@ kind: Deployment
 metadata:
   name: server
   namespace: {{ .Values.namespace }}
+  annotations:
+    keel.sh/policy: force
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "@every 1m"
 spec:
   replicas: 1
   selector:
@@ -28,3 +32,14 @@ spec:
           value: {{ .Values.environment.SMTP_PASS }}
         - name: SEND_TO
           value: {{ .Values.environment.SEND_TO }}
+        - name: POSTGRES_USER
+          value: {{ .Values.environment.POSTGRES_USER }}
+        - name: POSTGRES_DB
+          value: {{ .Values.environment.POSTGRES_DB }}
+        - name: AUTH_SECRET_KEY
+          value: {{ .Values.environment.AUTH_SECRET_KEY }}
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pg-secret
+              key: postgres-password
