@@ -5,6 +5,7 @@ param(
   [int]$HttpsPort = 8443,
   [string]$Namespace = "vista-monte-mar",
   [string]$BackendImage = "vmm-be:local",
+  [string]$FrontendImage = "vmm-app:local",
   [string]$Domain = "vmm.localhost"
 )
 
@@ -104,6 +105,22 @@ if ($localImage) {
 
   Write-Step "Patching server deployment to use '$BackendImage'..."
   kubectl -n $Namespace set image deployment/server "server=$BackendImage" | Out-Host
+}
+
+$localFrontendImage = docker images --format "{{.Repository}}:{{.Tag}}" | Select-String -SimpleMatch $FrontendImage
+if ($localFrontendImage) {
+  Write-Step "Importing local frontend image '$FrontendImage' into k3s containerd..."
+  $tempTar = Join-Path $root ".local\vmm-app-local.tar"
+  if (Test-Path $tempTar) {
+    Remove-Item $tempTar -Force
+  }
+
+  docker save -o $tempTar $FrontendImage
+  docker cp $tempTar "$ClusterName`:/tmp/vmm-app-local.tar"
+  docker exec $ClusterName ctr -n k8s.io images import /tmp/vmm-app-local.tar | Out-Host
+
+  Write-Step "Patching app deployment to use '$FrontendImage'..."
+  kubectl -n $Namespace set image deployment/app "app=$FrontendImage" | Out-Host
 }
 
 Write-Step "Waiting for deployments to become ready..."

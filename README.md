@@ -15,6 +15,7 @@ This will:
 - Install cert-manager if missing
 - Apply `k8s/ingress-https.yaml` for domain-based ingress on `vmm.localhost`
 - Import local backend image `vmm-be:local` into k3s when available
+- Import local frontend image `vmm-app:local` into k3s when available
 - Serve UI via ingress:
   - `http://vmm.localhost:8080/vista_monte_mar/`
   - `https://vmm.localhost:8443/vista_monte_mar/`

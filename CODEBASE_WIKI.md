@@ -22,6 +22,7 @@ Infrastructure/deployment repo for Kubernetes via Helm, including app/server dep
 - `k8s/ingress-https.yaml`: domain-based ingress + cert-manager resources for HTTPS
 - `start-local-k3s.ps1`: one-command local startup and localhost routing
 - `stop-local-k3s.ps1`: one-command local shutdown
+- `DEPLOYMENT_RUNBOOK.md`: exact, copy-paste deployment commands for this environment
 
 ## Chart Behavior
 
@@ -74,11 +75,18 @@ This provides:
   - `http://vmm.localhost:8080/vista_monte_mar/`
   - `https://vmm.localhost:8443/vista_monte_mar/`
 - Optional local backend image import when `vmm-be:local` exists
+- Optional local frontend image import when `vmm-app:local` exists
 
 Stop:
 
 ```powershell
 .\stop-local-k3s.ps1
+```
+
+Detailed deployment runbook:
+
+```text
+DEPLOYMENT_RUNBOOK.md
 ```
 
 ## Portainer Helper
