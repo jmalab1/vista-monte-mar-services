@@ -7,6 +7,21 @@ server:
   images: 
     prod: jmalab24/vista-monte-mar-be:latest
     dev: jmalab24/vista-monte-mar-be:dev
+
+postgres:
+  enabled: true
+  image: postgres:16-alpine
+  service:
+    port: 5432
+  auth:
+    database: visitor_analytics
+    user: visitor_user
+    password: change-me
+  storage:
+    size: 5Gi
+    storageClassName: ""
+  init:
+    createVisitorTable: true
  
 environment:
   SPACE: "development"

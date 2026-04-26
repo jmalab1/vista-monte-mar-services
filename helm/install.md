@@ -60,3 +60,10 @@ kubectl port-forward svc/app 8080:80 --namespace vista-monte-mar
 ```
 
 In development, access it by http://jm-vivo.netbird.cloud:30080/vista_monte_mar/ not https
+
+Postgres checks
+```
+kubectl get pods -n vista-monte-mar | grep postgres
+kubectl get svc postgres -n vista-monte-mar
+kubectl port-forward svc/postgres 5432:5432 -n vista-monte-mar
+```

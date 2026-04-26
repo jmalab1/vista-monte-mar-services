@@ -1,0 +1,208 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vista-monte-mar
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+  namespace: vista-monte-mar
+type: Opaque
+stringData:
+  POSTGRES_DB: visitor_analytics
+  POSTGRES_USER: visitor_user
+  POSTGRES_PASSWORD: change-me
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data
+  namespace: vista-monte-mar
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-sql
+  namespace: vista-monte-mar
+data:
+  01_create_visitors_table.sql: |
+    CREATE TABLE IF NOT EXISTS visitors (
+      id BIGSERIAL PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      path TEXT NOT NULL,
+      referrer TEXT,
+      user_agent TEXT,
+      ip INET
+    );
+
+    CREATE TABLE IF NOT EXISTS form_submissions (
+      id BIGSERIAL PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      firstname TEXT NOT NULL,
+      lastname TEXT NOT NULL,
+      email TEXT NOT NULL,
+      phone_number TEXT,
+      comment TEXT NOT NULL,
+      referrer TEXT,
+      user_agent TEXT,
+      ip TEXT,
+      email_sent BOOLEAN NOT NULL DEFAULT FALSE,
+      email_error TEXT
+    );
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: vista-monte-mar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:16-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - secretRef:
+            name: postgres-secret
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+        - name: postgres-init-sql
+          mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-data
+      - name: postgres-init-sql
+        configMap:
+          name: postgres-init-sql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: vista-monte-mar
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+  ports:
+  - name: postgres
+    port: 5432
+    targetPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+  namespace: vista-monte-mar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - name: server
+        image: jmalab24/vista-monte-mar-be:dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8135
+        env:
+        - name: SMTP_USER
+          value: ""
+        - name: SMTP_PASS
+          value: ""
+        - name: SEND_TO
+          value: ""
+        - name: DB_HOST
+          value: postgres
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_DB
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+  namespace: vista-monte-mar
+spec:
+  type: ClusterIP
+  selector:
+    app: server
+  ports:
+  - port: 8135
+    targetPort: 8135
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: vista-monte-mar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app
+        image: jmalab24/vista-monte-mar-app:dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: DOMAIN
+          value: localhost
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+  namespace: vista-monte-mar
+spec:
+  type: ClusterIP
+  selector:
+    app: app
+  ports:
+  - port: 80
+    targetPort: 80

@@ -26,3 +26,24 @@ spec:
           value: {{ .Values.environment.SMTP_PASS }}
         - name: SEND_TO
           value: {{ .Values.environment.SEND_TO }}
+        {{- if .Values.postgres.enabled }}
+        - name: DB_HOST
+          value: postgres
+        - name: DB_PORT
+          value: {{ .Values.postgres.service.port | quote }}
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_DB
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+        {{- end }}

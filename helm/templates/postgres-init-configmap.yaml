@@ -1,0 +1,17 @@
+{{- if and .Values.postgres.enabled .Values.postgres.init.createVisitorTable }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-sql
+  namespace: {{ .Values.namespace }}
+data:
+  01_create_visitors_table.sql: |
+    CREATE TABLE IF NOT EXISTS visitors (
+      id BIGSERIAL PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      path TEXT NOT NULL,
+      referrer TEXT,
+      user_agent TEXT,
+      ip INET
+    );
+{{- end }}
