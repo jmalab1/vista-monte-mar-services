@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vista-monte-mar-app
+  namespace: vista-monte-mar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vista-monte-mar-app
+  template:
+    metadata:
+      labels:
+        app: vista-monte-mar-app
+    spec:
+      containers:
+        - name: vista-monte-mar-app
+          image: vista-monte-mar-app:dev
+          imagePullPolicy: Never
+          env:
+            - name: API_UPSTREAM
+              value: http://127.0.0.1:8135
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /vista_monte_mar/
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /vista_monte_mar/
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20

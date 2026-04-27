@@ -1,33 +1,23 @@
-# costa-rica-condo
+# Vista Monte Mar Services
 
-## Local k3s one-command startup
+Infrastructure and deployment repo for Vista Monte Mar.
 
-From this repo root:
+This repo owns:
+- Kubernetes manifests and cluster wiring
+- Helm chart assets
+- frontend k3s deploy scripts
+- SSH/bootstrap helpers for the k3s machine
 
-```powershell
-.\start-local-k3s.ps1
+Frontend remote deploy files:
+- `scripts/setup-k3s-ssh.sh`
+- `scripts/deploy-frontend-k3s.sh`
+- `k8s/remote-frontend/`
+
+Frontend deploy example:
+
+```bash
+bash scripts/setup-k3s-ssh.sh 192.168.68.54 <remote-user>
+K3S_USER=<remote-user> REMOTE_SUDO_PASSWORD=<sudo-password> bash scripts/deploy-frontend-k3s.sh
 ```
 
-This will:
-- Start (or reuse) local k3s container `vmm-k3s`
-- Expose ingress ports on localhost (`8080` HTTP, `8443` HTTPS)
-- Apply the stack in `k8s/local-stack.yaml` (app + server + postgres)
-- Install cert-manager if missing
-- Apply `k8s/ingress-https.yaml` for domain-based ingress on `vmm.localhost`
-- Import local backend image `vmm-be:local` into k3s when available
-- Import local frontend image `vmm-app:local` into k3s when available
-- Serve UI via ingress:
-  - `http://vmm.localhost:8080/vista_monte_mar/`
-  - `https://vmm.localhost:8443/vista_monte_mar/`
-
-Optional domain override:
-
-```powershell
-.\start-local-k3s.ps1 -Domain your.domain.example
-```
-
-Stop:
-
-```powershell
-.\stop-local-k3s.ps1
-```
+Helm assets for broader stack management live under `helm/`.

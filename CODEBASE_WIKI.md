@@ -20,8 +20,9 @@ Infrastructure/deployment repo for Kubernetes via Helm, including app/server dep
 - `portainer.sh`: helper script for Portainer install/upgrade
 - `k8s/local-stack.yaml`: compose-like local k3s stack manifest (app + server + postgres)
 - `k8s/ingress-https.yaml`: domain-based ingress + cert-manager resources for HTTPS
-- `start-local-k3s.ps1`: one-command local startup and localhost routing
-- `stop-local-k3s.ps1`: one-command local shutdown
+- `k8s/remote-frontend/*`: remote frontend namespace/deployment/service/ingress manifests
+- `scripts/setup-k3s-ssh.sh`: SSH key bootstrap for the k3s machine
+- `scripts/deploy-frontend-k3s.sh`: frontend image build/import/deploy helper
 - `DEPLOYMENT_RUNBOOK.md`: exact, copy-paste deployment commands for this environment
 
 ## Chart Behavior
@@ -56,32 +57,21 @@ Infrastructure/deployment repo for Kubernetes via Helm, including app/server dep
 ## Local/Cluster Usage
 
 ```bash
-cd C:\Users\malab\Documents\dev\vista-monte-mar-services\helm
+cd /path/to/vista-monte-mar-services/helm
 helm dependency update
 helm upgrade --install vmm . -n vista-monte-mar
 ```
 
-## Compose-like Local Workflow (Recommended)
+## Remote Frontend Deploy
 
-From `C:\Users\malab\Documents\dev\vista-monte-mar-services`:
+From the services repo root:
 
-```powershell
-.\start-local-k3s.ps1
+```bash
+bash scripts/setup-k3s-ssh.sh 192.168.68.54 <remote-user>
+K3S_USER=<remote-user> REMOTE_SUDO_PASSWORD=<sudo-password> bash scripts/deploy-frontend-k3s.sh
 ```
 
-This provides:
-- Single command startup for app/server/postgres on k3s
-- Domain-based ingress URLs:
-  - `http://vmm.localhost:8080/vista_monte_mar/`
-  - `https://vmm.localhost:8443/vista_monte_mar/`
-- Optional local backend image import when `vmm-be:local` exists
-- Optional local frontend image import when `vmm-app:local` exists
-
-Stop:
-
-```powershell
-.\stop-local-k3s.ps1
-```
+This path owns the remote frontend rollout to the k3s machine at `192.168.68.54`.
 
 Detailed deployment runbook:
 
