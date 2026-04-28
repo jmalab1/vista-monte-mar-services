@@ -67,16 +67,49 @@ helm upgrade --install vmm . -n vista-monte-mar
 From the services repo root:
 
 ```bash
-bash scripts/setup-k3s-ssh.sh 192.168.68.54 <remote-user>
-K3S_USER=<remote-user> REMOTE_SUDO_PASSWORD=<sudo-password> bash scripts/deploy-frontend-k3s.sh
+K3S_USER=admin REMOTE_SUDO_PASSWORD=admin bash scripts/build-and-deploy-dev.sh
 ```
+
+What this helper does:
+
+- finds the sibling `vista-monte-mar-app` repo automatically
+- switches into the app repo for the Docker build context
+- calls `scripts/deploy-frontend-k3s.sh` to copy/import/restart on k3s
+
+Lower-level helper:
+
+```bash
+cd /mnt/c/Users/malab/Documents/dev/vista-monte-mar-app
+K3S_USER=admin REMOTE_SUDO_PASSWORD=admin bash /mnt/c/Users/malab/Documents/dev/vista-monte-mar-services/scripts/deploy-frontend-k3s.sh
+```
+
+Prerequisites:
+
+```bash
+bash /mnt/c/Users/malab/Documents/dev/vista-monte-mar-services/scripts/setup-k3s-ssh.sh 192.168.68.54 admin
+```
+
+- SSH key expected by default: `~/.ssh/vista_monte_mar_k3s`
+- Remote k3s host default: `192.168.68.54`
+- Remote user is provided via `K3S_USER`
+- Remote sudo password can be provided via `REMOTE_SUDO_PASSWORD`
+
+What the deploy helper does:
+
+1. Builds the frontend Docker image locally from the current directory
+2. Saves the image to a temporary tarball
+3. Copies the tarball to the k3s machine over SSH
+4. Imports the image into k3s containerd on the remote host
+5. Applies namespace, deployment, service, and ingress manifests
+6. Restarts the frontend deployment and waits for rollout completion
 
 This path owns the remote frontend rollout to the k3s machine at `192.168.68.54`.
 
 Detailed deployment runbook:
 
 ```text
-DEPLOYMENT_RUNBOOK.md
+There is currently no checked-in DEPLOYMENT_RUNBOOK.md in this repo.
+Use scripts/deploy-frontend-k3s.sh as the source of truth for the current dev deploy flow.
 ```
 
 ## Portainer Helper
