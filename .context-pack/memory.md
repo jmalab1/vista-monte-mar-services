@@ -24,6 +24,7 @@
 ## Known Pitfalls
 - No AGENTS.md found.
 - tree entries omitted by limit: 9
+- Before committing or refreshing this memory, make sure it did not capture anything sensitive from `.local/kubeconfig.yaml`; run `rg "password|token|secret|key|kubeconfig|192\\.168|REMOTE" .context-pack/memory.md`.
 
 ## Operational Notes
 - none yet
