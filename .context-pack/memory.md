@@ -9,28 +9,42 @@
 
 ## Repo
 - name: vista-monte-mar-services
-- purpose: Repository type is inferred heuristically from selected files.
-- project types: unknown
+- purpose: Infrastructure and deployment repo for Vista Monte Mar.
+- project types: kubernetes, helm, scripts
+- active branch: v2
 
 ## Read First
-- `README.md`: project overview
+- `AGENTS.md`: repo instruction to run context-pack and read this memory before edits.
+- `README.md`: deploy repo ownership and frontend remote deploy flow.
+- `CODEBASE_WIKI.md`: local operations/runbook notes.
+- `k8s/local-stack.yaml`: local stack manifest and app/database wiring.
+- `helm/`: Helm chart templates for broader stack management.
+- `scripts/`: k3s SSH/bootstrap/build/deploy helpers.
 
 ## Entry Points
-- none yet
+- `scripts/build-and-deploy-dev.sh`: frontend dev deploy entrypoint.
+- `scripts/deploy-frontend-k3s.sh`: lower-level frontend k3s deploy flow.
+- `scripts/setup-k3s-ssh.sh`: SSH/bootstrap helper.
+- `k8s/local-stack.yaml`: main local Kubernetes manifest.
 
 ## Hotspots
-- none yet
+- Postgres templates live under `helm/templates/postgres-*`.
+- Ingress and local stack wiring live under `k8s/`.
+- Frontend deployment scripts depend on remote user/sudo/cluster assumptions.
 
 ## Known Pitfalls
-- No AGENTS.md found.
-- tree entries omitted by limit: 9
-- Before committing or refreshing this memory, make sure it did not capture anything sensitive from `.local/kubeconfig.yaml`; run `rg "password|token|secret|key|kubeconfig|192\\.168|REMOTE" .context-pack/memory.md`.
+- Do not commit sensitive local kubeconfig data. Before committing or refreshing this memory, run `rg "password|token|secret|key|kubeconfig|192\\.168|REMOTE" .context-pack/memory.md`.
+- `.local/kubeconfig.yaml` may contain certificate/key material; treat it as sensitive even if a diff looks metadata-only.
+- Windows file-mode noise has happened in this workspace; repo config should keep `core.filemode=false`.
+- This repo owns infrastructure/deploy assets; frontend source belongs in `vista-monte-mar-app`.
 
 ## Operational Notes
-- none yet
+- Frontend remote deploy example uses `K3S_USER` and `REMOTE_SUDO_PASSWORD` with `scripts/build-and-deploy-dev.sh`.
+- Lower-level flow: run `scripts/setup-k3s-ssh.sh`, then `scripts/deploy-frontend-k3s.sh`.
+- Helm assets live under `helm/`; raw manifests live under `k8s/`.
 
 ## Debugging Notes
-- No high-signal changes detected
+- Context-pack initially omitted many services changes as low-signal because they were mode-only changes.
 
 ## Open Questions
-- Fill this in as you learn where the repo still fights back.
+- Document which deployment path is canonical when Helm and raw `k8s/` manifests diverge.
