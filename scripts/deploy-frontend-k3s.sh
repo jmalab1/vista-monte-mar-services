@@ -1,6 +1,21 @@
 #!/bin/bash
 set -eu
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SERVICES_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+ENV_FILE_WAS_SET="${ENV_FILE+x}"
+ENV_FILE="${ENV_FILE:-${SERVICES_ROOT}/.env}"
+
+if [ -f "$ENV_FILE" ]; then
+    set -a
+    # shellcheck disable=SC1090
+    . "$ENV_FILE"
+    set +a
+elif [ -n "$ENV_FILE_WAS_SET" ]; then
+    echo "Env file not found: $ENV_FILE" >&2
+    exit 1
+fi
+
 REMOTE_HOST="${K3S_HOST:-192.168.68.54}"
 REMOTE_USER="${K3S_USER:-}"
 SSH_KEY_PATH="${K3S_SSH_KEY_PATH:-$HOME/.ssh/vista_monte_mar_k3s}"
@@ -8,12 +23,18 @@ IMAGE_NAME="${IMAGE_NAME:-vista-monte-mar-app}"
 IMAGE_TAG="${IMAGE_TAG:-dev}"
 FULL_IMAGE="${IMAGE_NAME}:${IMAGE_TAG}"
 REMOTE_TMP_IMAGE="/tmp/${IMAGE_NAME//\//-}-${IMAGE_TAG}.tar"
-REMOTE_API_UPSTREAM="${API_UPSTREAM:-http://127.0.0.1:8135}"
+REMOTE_API_UPSTREAM="${API_UPSTREAM:-http://server:8135}"
 KUBECTL_BIN="${KUBECTL_BIN:-kubectl}"
 RESET_NAMESPACE="${RESET_NAMESPACE:-0}"
 REMOTE_SUDO_PASSWORD="${REMOTE_SUDO_PASSWORD:-}"
 SSH_COMMON_ARGS=(-F /dev/null -o StrictHostKeyChecking=accept-new)
 SCP_COMMON_ARGS=(-F /dev/null -o StrictHostKeyChecking=accept-new)
+
+shell_quote() {
+    printf "'"
+    printf "%s" "$1" | sed "s/'/'\\\\''/g"
+    printf "'"
+}
 
 if ! command -v docker >/dev/null 2>&1; then
     echo "Docker is not installed on the dev machine." >&2
@@ -27,6 +48,11 @@ fi
 
 if ! command -v scp >/dev/null 2>&1; then
     echo "SCP is not installed on the dev machine." >&2
+    exit 1
+fi
+
+if ! command -v sed >/dev/null 2>&1; then
+    echo "sed is not installed on the dev machine." >&2
     exit 1
 fi
 
@@ -54,15 +80,17 @@ docker save -o "$LOCAL_IMAGE_TAR" "$FULL_IMAGE"
 scp "${SCP_COMMON_ARGS[@]}" -i "$SSH_KEY_PATH" "$LOCAL_IMAGE_TAR" "$SSH_TARGET:$REMOTE_TMP_IMAGE"
 
 if [ -n "$REMOTE_SUDO_PASSWORD" ]; then
-    REMOTE_IMPORT_CMD="printf '%s\n' '$REMOTE_SUDO_PASSWORD' | sudo -S k3s ctr images import '$REMOTE_TMP_IMAGE' && rm -f '$REMOTE_TMP_IMAGE'"
+    REMOTE_IMPORT_CMD="printf '%s\n' $(shell_quote "$REMOTE_SUDO_PASSWORD") | sudo -S k3s ctr images import $(shell_quote "$REMOTE_TMP_IMAGE") && rm -f $(shell_quote "$REMOTE_TMP_IMAGE")"
 else
-    REMOTE_IMPORT_CMD="sudo k3s ctr images import '$REMOTE_TMP_IMAGE' && rm -f '$REMOTE_TMP_IMAGE'"
+    REMOTE_IMPORT_CMD="sudo k3s ctr images import $(shell_quote "$REMOTE_TMP_IMAGE") && rm -f $(shell_quote "$REMOTE_TMP_IMAGE")"
 fi
 
 ssh "${SSH_COMMON_ARGS[@]}" -i "$SSH_KEY_PATH" "$SSH_TARGET" "$REMOTE_IMPORT_CMD"
 
+REMOTE_ENV="API_UPSTREAM=$(shell_quote "$REMOTE_API_UPSTREAM") IMAGE_NAME=$(shell_quote "$IMAGE_NAME") IMAGE_TAG=$(shell_quote "$IMAGE_TAG") KUBECTL_BIN=$(shell_quote "$KUBECTL_BIN") RESET_NAMESPACE=$(shell_quote "$RESET_NAMESPACE") REMOTE_SUDO_PASSWORD=$(shell_quote "$REMOTE_SUDO_PASSWORD")"
+
 ssh "${SSH_COMMON_ARGS[@]}" -i "$SSH_KEY_PATH" "$SSH_TARGET" \
-    "API_UPSTREAM='$REMOTE_API_UPSTREAM' IMAGE_NAME='$IMAGE_NAME' IMAGE_TAG='$IMAGE_TAG' KUBECTL_BIN='$KUBECTL_BIN' RESET_NAMESPACE='$RESET_NAMESPACE' REMOTE_SUDO_PASSWORD='$REMOTE_SUDO_PASSWORD' bash -s" <<'EOM'
+    "$REMOTE_ENV bash -s" <<'EOM'
 set -eu
 
 TMP_DIR="$(mktemp -d)"

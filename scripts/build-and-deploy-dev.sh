@@ -3,6 +3,20 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SERVICES_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+ENV_FILE_WAS_SET="${ENV_FILE+x}"
+ENV_FILE="${ENV_FILE:-${SERVICES_ROOT}/.env}"
+
+if [[ -f "$ENV_FILE" ]]; then
+  set -a
+  # shellcheck disable=SC1090
+  . "$ENV_FILE"
+  set +a
+elif [[ -n "$ENV_FILE_WAS_SET" ]]; then
+  echo "Env file not found: $ENV_FILE" >&2
+  exit 1
+fi
+
 APP_ROOT="${APP_ROOT:-$(cd "${SERVICES_ROOT}/../vista-monte-mar-app" 2>/dev/null && pwd || true)}"
 DEPLOY_SCRIPT="${SCRIPT_DIR}/deploy-frontend-k3s.sh"
 
@@ -15,6 +29,7 @@ Usage:
 
 Optional environment variables:
   APP_ROOT                 Path to the vista-monte-mar-app repo
+  ENV_FILE                 Env file to source (default: .env in services repo)
   K3S_USER                 Remote SSH user (required)
   REMOTE_SUDO_PASSWORD     Remote sudo password (optional, but used in this environment)
   K3S_HOST                 Remote host (defaults inside deploy helper)

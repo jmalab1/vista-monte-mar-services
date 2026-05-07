@@ -26,6 +26,21 @@ spec:
           value: {{ .Values.environment.SMTP_PASS }}
         - name: SEND_TO
           value: {{ .Values.environment.SEND_TO }}
+        - name: AUTH_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: server-auth-secret
+              key: AUTH_SECRET
+        - name: ADMIN_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: server-auth-secret
+              key: ADMIN_USERNAME
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: server-auth-secret
+              key: ADMIN_PASSWORD
         {{- if .Values.postgres.enabled }}
         - name: DB_HOST
           value: postgres

@@ -21,4 +21,6 @@ spec:
         - containerPort: 80
         env:
         - name: DOMAIN
-          value: {{ .Values.domain }}
+          value: {{ .Values.domain | quote }}
+        - name: API_UPSTREAM
+          value: {{ .Values.app.apiUpstream | quote }}

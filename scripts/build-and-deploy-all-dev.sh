@@ -5,6 +5,19 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SERVICES_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 DEV_ROOT_DEFAULT="$(cd "${SERVICES_ROOT}/.." && pwd)"
 
+ENV_FILE_WAS_SET="${ENV_FILE+x}"
+ENV_FILE="${ENV_FILE:-${SERVICES_ROOT}/.env}"
+
+if [[ -f "$ENV_FILE" ]]; then
+  set -a
+  # shellcheck disable=SC1090
+  . "$ENV_FILE"
+  set +a
+elif [[ -n "$ENV_FILE_WAS_SET" ]]; then
+  echo "Env file not found: $ENV_FILE" >&2
+  exit 1
+fi
+
 APP_ROOT="${APP_ROOT:-${DEV_ROOT_DEFAULT}/vista-monte-mar-app}"
 BE_ROOT="${BE_ROOT:-${DEV_ROOT_DEFAULT}/vista-monte-mar-be}"
 
@@ -14,8 +27,15 @@ SSH_KEY_PATH="${K3S_SSH_KEY_PATH:-$HOME/.ssh/vista_monte_mar_k3s}"
 REMOTE_SUDO_PASSWORD="${REMOTE_SUDO_PASSWORD:-}"
 API_UPSTREAM="${API_UPSTREAM:-http://server:8135}"
 
-ADMIN_USERNAME="${ADMIN_USERNAME:-admin}"
-ADMIN_PASSWORD="${ADMIN_PASSWORD:-admin123}"
+AUTH_SECRET="${AUTH_SECRET:-}"
+ADMIN_USERNAME="${ADMIN_USERNAME:-}"
+ADMIN_PASSWORD="${ADMIN_PASSWORD:-}"
+SMTP_USER="${SMTP_USER:-}"
+SMTP_PASS="${SMTP_PASS:-}"
+SEND_TO="${SEND_TO:-}"
+POSTGRES_DB="${POSTGRES_DB:-visitor_analytics}"
+POSTGRES_USER="${POSTGRES_USER:-visitor_user}"
+POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-change-me}"
 
 APP_IMAGE_NAME="${APP_IMAGE_NAME:-jmalab24/vista-monte-mar-app}"
 APP_IMAGE_TAG="${APP_IMAGE_TAG:-dev}"
@@ -31,6 +51,12 @@ REMOTE_BE_TAR="/tmp/${BE_IMAGE_NAME//\//-}-${BE_IMAGE_TAG}.tar"
 SSH_COMMON_ARGS=(-F /dev/null -o StrictHostKeyChecking=accept-new)
 SCP_COMMON_ARGS=(-F /dev/null -o StrictHostKeyChecking=accept-new)
 
+shell_quote() {
+  printf "'"
+  printf "%s" "$1" | sed "s/'/'\\\\''/g"
+  printf "'"
+}
+
 usage() {
   cat <<'USAGE'
 Build and deploy full dev stack (frontend + backend + postgres) to remote k3s.
@@ -41,6 +67,7 @@ Usage:
 Optional environment variables:
   APP_ROOT             Path to vista-monte-mar-app repo (default: ../vista-monte-mar-app)
   BE_ROOT              Path to vista-monte-mar-be repo (default: ../vista-monte-mar-be)
+  ENV_FILE             Env file to source (default: .env in services repo)
   K3S_HOST             Remote host (default: 192.168.68.54)
   K3S_SSH_KEY_PATH     SSH key path (default: ~/.ssh/vista_monte_mar_k3s)
   APP_IMAGE_NAME       Frontend image name (default: jmalab24/vista-monte-mar-app)
@@ -49,8 +76,15 @@ Optional environment variables:
   BE_IMAGE_TAG         Backend image tag (default: dev)
   SKIP_INGRESS         Set to 1 to skip applying k8s/ingress-https.yaml
   API_UPSTREAM         Frontend API upstream (default: http://server:8135)
-  ADMIN_USERNAME       Backend login username (default: admin)
-  ADMIN_PASSWORD       Backend login password (default: admin123)
+  AUTH_SECRET          Backend token signing secret (required)
+  ADMIN_USERNAME       Backend login username (required)
+  ADMIN_PASSWORD       Backend login password (required)
+  SMTP_USER            SMTP username for contact form mail
+  SMTP_PASS            SMTP password for contact form mail
+  SEND_TO              Contact form destination email
+  POSTGRES_DB          Postgres database name (default: visitor_analytics)
+  POSTGRES_USER        Postgres username (default: visitor_user)
+  POSTGRES_PASSWORD    Postgres password (default: change-me)
 USAGE
 }
 
@@ -69,10 +103,16 @@ require_cmd() {
 require_cmd docker
 require_cmd ssh
 require_cmd scp
+require_cmd sed
 
 if [[ -z "$REMOTE_USER" ]]; then
   echo "K3S_USER is required." >&2
   echo "Example: K3S_USER=admin REMOTE_SUDO_PASSWORD=admin bash scripts/build-and-deploy-all-dev.sh" >&2
+  exit 1
+fi
+
+if [[ -z "$AUTH_SECRET" || -z "$ADMIN_USERNAME" || -z "$ADMIN_PASSWORD" ]]; then
+  echo "AUTH_SECRET, ADMIN_USERNAME, and ADMIN_PASSWORD are required." >&2
   exit 1
 fi
 
@@ -122,17 +162,19 @@ scp "${SCP_COMMON_ARGS[@]}" -i "$SSH_KEY_PATH" "$LOCAL_APP_TAR" "$SSH_TARGET:$RE
 scp "${SCP_COMMON_ARGS[@]}" -i "$SSH_KEY_PATH" "$LOCAL_BE_TAR" "$SSH_TARGET:$REMOTE_BE_TAR"
 
 if [[ -n "$REMOTE_SUDO_PASSWORD" ]]; then
-  REMOTE_IMPORT_CMD="printf '%s\\n' '$REMOTE_SUDO_PASSWORD' | sudo -S k3s ctr images import '$REMOTE_APP_TAR' && printf '%s\\n' '$REMOTE_SUDO_PASSWORD' | sudo -S k3s ctr images import '$REMOTE_BE_TAR' && rm -f '$REMOTE_APP_TAR' '$REMOTE_BE_TAR'"
+  REMOTE_IMPORT_CMD="printf '%s\\n' $(shell_quote "$REMOTE_SUDO_PASSWORD") | sudo -S k3s ctr images import $(shell_quote "$REMOTE_APP_TAR") && printf '%s\\n' $(shell_quote "$REMOTE_SUDO_PASSWORD") | sudo -S k3s ctr images import $(shell_quote "$REMOTE_BE_TAR") && rm -f $(shell_quote "$REMOTE_APP_TAR") $(shell_quote "$REMOTE_BE_TAR")"
 else
-  REMOTE_IMPORT_CMD="sudo k3s ctr images import '$REMOTE_APP_TAR' && sudo k3s ctr images import '$REMOTE_BE_TAR' && rm -f '$REMOTE_APP_TAR' '$REMOTE_BE_TAR'"
+  REMOTE_IMPORT_CMD="sudo k3s ctr images import $(shell_quote "$REMOTE_APP_TAR") && sudo k3s ctr images import $(shell_quote "$REMOTE_BE_TAR") && rm -f $(shell_quote "$REMOTE_APP_TAR") $(shell_quote "$REMOTE_BE_TAR")"
 fi
 
 echo "==> Importing images into remote k3s containerd"
 ssh "${SSH_COMMON_ARGS[@]}" -i "$SSH_KEY_PATH" "$SSH_TARGET" "$REMOTE_IMPORT_CMD"
 
+REMOTE_ENV="REMOTE_SUDO_PASSWORD=$(shell_quote "$REMOTE_SUDO_PASSWORD") APP_IMAGE=$(shell_quote "$APP_FULL_IMAGE") BE_IMAGE=$(shell_quote "$BE_FULL_IMAGE") SKIP_INGRESS=$(shell_quote "${SKIP_INGRESS:-0}") AUTH_SECRET=$(shell_quote "$AUTH_SECRET") ADMIN_USERNAME=$(shell_quote "$ADMIN_USERNAME") ADMIN_PASSWORD=$(shell_quote "$ADMIN_PASSWORD") SMTP_USER=$(shell_quote "$SMTP_USER") SMTP_PASS=$(shell_quote "$SMTP_PASS") SEND_TO=$(shell_quote "$SEND_TO") POSTGRES_DB=$(shell_quote "$POSTGRES_DB") POSTGRES_USER=$(shell_quote "$POSTGRES_USER") POSTGRES_PASSWORD=$(shell_quote "$POSTGRES_PASSWORD") API_UPSTREAM=$(shell_quote "$API_UPSTREAM")"
+
 echo "==> Applying Kubernetes manifests and restarting workloads"
 ssh "${SSH_COMMON_ARGS[@]}" -i "$SSH_KEY_PATH" "$SSH_TARGET" \
-  "REMOTE_SUDO_PASSWORD='$REMOTE_SUDO_PASSWORD' APP_IMAGE='$APP_FULL_IMAGE' BE_IMAGE='$BE_FULL_IMAGE' SKIP_INGRESS='${SKIP_INGRESS:-0}' ADMIN_USERNAME='$ADMIN_USERNAME' ADMIN_PASSWORD='$ADMIN_PASSWORD' API_UPSTREAM='$API_UPSTREAM' bash -s" <<'EOM'
+  "$REMOTE_ENV bash -s" <<'EOM'
 set -euo pipefail
 
 run_sudo() {
@@ -162,9 +204,9 @@ metadata:
   namespace: vista-monte-mar
 type: Opaque
 stringData:
-  POSTGRES_DB: visitor_analytics
-  POSTGRES_USER: visitor_user
-  POSTGRES_PASSWORD: change-me
+  POSTGRES_DB: "${POSTGRES_DB}"
+  POSTGRES_USER: "${POSTGRES_USER}"
+  POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -283,11 +325,13 @@ spec:
         - containerPort: 8135
         env:
         - name: SMTP_USER
-          value: ""
+          value: "${SMTP_USER}"
         - name: SMTP_PASS
-          value: ""
+          value: "${SMTP_PASS}"
         - name: SEND_TO
-          value: ""
+          value: "${SEND_TO}"
+        - name: AUTH_SECRET
+          value: "${AUTH_SECRET}"
         - name: ADMIN_USERNAME
           value: "${ADMIN_USERNAME}"
         - name: ADMIN_PASSWORD

@@ -2,11 +2,16 @@ app:
   images:
     prod: jmalab24/vista-monte-mar-app:latest
     dev: jmalab24/vista-monte-mar-app:dev
+  apiUpstream: http://server:8135
   
 server:
   images: 
     prod: jmalab24/vista-monte-mar-be:latest
     dev: jmalab24/vista-monte-mar-be:dev
+  auth:
+    secret: ""
+    adminUsername: ""
+    adminPassword: ""
 
 postgres:
   enabled: true

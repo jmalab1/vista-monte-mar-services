@@ -19,7 +19,7 @@ spec:
           imagePullPolicy: Never
           env:
             - name: API_UPSTREAM
-              value: http://127.0.0.1:8135
+              value: http://server:8135
           ports:
             - containerPort: 80
           readinessProbe:
